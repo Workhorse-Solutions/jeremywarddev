@@ -1,0 +1,16 @@
+<div
+  class="alert <%= alert_class %> shadow"
+  role="status"
+  data-controller="flash"
+  data-flash-timeout-value="<%= timeout_ms %>"
+  data-action="mouseenter->flash#pause mouseleave->flash#resume">
+  <span><%= message %></span>
+
+  <button
+    type="button"
+    class="btn btn-ghost btn-sm"
+    aria-label="<%= close_label %>"
+    data-action="flash#close">
+    ✕
+  </button>
+</div>

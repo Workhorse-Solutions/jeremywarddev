@@ -1,0 +1,5 @@
+pending_invite:
+  account: acme
+  invited_by_user: alice
+  email: pending@example.com
+  expires_at: <%= 7.days.from_now %>

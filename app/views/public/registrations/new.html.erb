@@ -1,0 +1,94 @@
+<% content_for :title, t("public.registrations.new.title") %>
+
+<%= render UI::SectionComponent.new(
+  outer_class: "min-h-screen flex items-center justify-center px-4 py-12",
+  inner_class: "flex items-center justify-center w-full") do %>
+  <%= render UI::CardComponent.new(class_name: "w-full max-w-sm shadow-xl") do %>
+    <h1 class="card-title text-2xl font-bold justify-center mb-2">
+      <%= t("public.registrations.new.title") %>
+    </h1>
+
+    <%= form_with model: @registration, url: signup_path, scope: :registration, class: "space-y-4" do |f| %>
+      <%= render Form::ControlComponent.new(
+        form: f,
+        attribute: :email,
+      ) do |field| %>
+        <% field.with_input do %>
+          <%= render Form::InputComponent.new(
+            form: f,
+            attribute: :email,
+            type: :email,
+            input_html: { autocomplete: "email", autofocus: true, required: true }
+          ) %>
+        <% end %>
+      <% end %>
+
+      <%= render Form::ControlComponent.new(
+        form: f,
+        attribute: :first_name,
+        label: t(".first_name_label"),
+      ) do |field| %>
+        <% field.with_input do %>
+          <%= render Form::InputComponent.new(
+            form: f,
+            attribute: :first_name,
+            type: :text,
+            input_html: { autocomplete: "given-name" }
+          ) %>
+        <% end %>
+      <% end %>
+
+      <%= render Form::ControlComponent.new(
+        form: f,
+        attribute: :last_name,
+        label: t(".last_name_label"),
+      ) do |field| %>
+        <% field.with_input do %>
+          <%= render Form::InputComponent.new(
+            form: f,
+            attribute: :last_name,
+            type: :text,
+            input_html: { autocomplete: "family-name" }
+          ) %>
+        <% end %>
+      <% end %>
+
+      <%= render Form::ControlComponent.new(
+        form: f,
+        attribute: :password,
+      ) do |field| %>
+        <% field.with_input do %>
+          <%= render Form::InputComponent.new(
+            form: f,
+            attribute: :password,
+            type: :password,
+            input_html: { autocomplete: "new-password", required: true }
+          ) %>
+        <% end %>
+      <% end %>
+
+      <%= render Form::ControlComponent.new(
+        form: f,
+        attribute: :password_confirmation,
+      ) do |field| %>
+        <% field.with_input do %>
+          <%= render Form::InputComponent.new(
+            form: f,
+            attribute: :password_confirmation,
+            type: :password,
+            input_html: { autocomplete: "new-password", required: true }
+          ) %>
+        <% end %>
+      <% end %>
+
+      <div class="card-actions">
+        <%= f.submit t(".submit"), class: "btn btn-primary w-full" %>
+      </div>
+    <% end %>
+
+    <p class="text-sm text-center mt-4">
+      <%= t(".has_account") %>
+      <%= link_to t(".sign_in"), login_path, class: "link link-primary" %>
+    </p>
+  <% end %>
+<% end %>

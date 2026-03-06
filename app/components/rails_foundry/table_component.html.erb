@@ -1,0 +1,24 @@
+<% inner_content = capture do %>
+  <div class="overflow-x-auto">
+    <table class="table w-full">
+      <% if caption.present? %>
+        <caption><%= caption %></caption>
+      <% end %>
+      <%= content %>
+    </table>
+  </div>
+
+  <% if show_pagination? %>
+    <div class="flex justify-center mt-4">
+      <%== pagy.series_nav %>
+    </div>
+  <% end %>
+<% end %>
+
+<% if frame_id.present? %>
+  <%= helpers.turbo_frame_tag frame_id do %>
+    <%= inner_content %>
+  <% end %>
+<% else %>
+  <%= inner_content %>
+<% end %>

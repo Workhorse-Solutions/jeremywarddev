@@ -1,0 +1,7 @@
+<h1><%= t(".heading") %></h1>
+
+<p><%= t(".greeting", inviter_name: @inviter.full_name, account_name: @account.name) %></p>
+
+<p><a href="<%= @acceptance_url %>"><%= t(".accept_link") %></a></p>
+
+<p><%= t(".expiry_notice") %></p>

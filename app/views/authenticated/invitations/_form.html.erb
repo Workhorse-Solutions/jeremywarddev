@@ -1,0 +1,11 @@
+<%= form_with model: invitation_form, url: team_invitations_path do |f| %>
+  <%= render Form::ControlComponent.new(form: f, attribute: :email, label: t("authenticated.invitations.new.email_label")) do |c| %>
+    <% c.with_input do %>
+      <%= render Form::InputComponent.new(form: f, attribute: :email, type: :email, input_html: { placeholder: t("authenticated.invitations.new.email_placeholder"), autofocus: true }) %>
+    <% end %>
+  <% end %>
+
+  <div class="mt-4">
+    <%= f.submit t("authenticated.invitations.new.submit"), class: "btn btn-primary" %>
+  </div>
+<% end %>

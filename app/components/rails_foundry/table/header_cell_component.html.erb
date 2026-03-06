@@ -1,0 +1,12 @@
+<th class="text-base-content border-b border-gray-200">
+  <% if sort_key %>
+    <%= helpers.link_to sort_url, class: "inline-flex items-center gap-2 hover:opacity-75 transition-opacity" do %>
+      <%= label %>
+      <% if (indicator = sort_indicator) %>
+        <span class="text-base-content text-xs font-bold"><%= indicator %></span>
+      <% end %>
+    <% end %>
+  <% else %>
+    <%= label %>
+  <% end %>
+</th>

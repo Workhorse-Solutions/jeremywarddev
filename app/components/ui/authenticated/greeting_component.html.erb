@@ -1,0 +1,13 @@
+<div>
+  <p class="font-medium leading-none md:text-lg">
+    <%= greeting_text %>
+    <% if user_first_name.present? %>
+      <span class="max-sm:hidden">, <%= user_first_name %>!</span>
+    <% end %>
+  </p>
+  <% if account_name.present? %>
+    <p class="mt-1 text-sm/none text-base-content/60 max-sm:hidden">
+      <%= account_name %>
+    </p>
+  <% end %>
+</div>

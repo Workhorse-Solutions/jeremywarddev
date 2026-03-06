@@ -1,0 +1,7 @@
+<%= turbo_stream.replace "modal" do %>
+  <%= turbo_frame_tag "modal" do %>
+    <%= render UI::ModalComponent.new(title: t("authenticated.invitations.new.title")) do %>
+      <%= render "form", invitation_form: @invitation_form %>
+    <% end %>
+  <% end %>
+<% end %>

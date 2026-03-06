@@ -1,0 +1,30 @@
+<%= render RailsFoundry::TableComponent.new(id: "pending-invitations") do %>
+  <thead>
+    <tr>
+      <%= render RailsFoundry::Table::HeaderCellComponent.new(label: t(".email")) %>
+      <%= render RailsFoundry::Table::HeaderCellComponent.new(label: t(".invited_by")) %>
+      <%= render RailsFoundry::Table::HeaderCellComponent.new(label: t(".expires")) %>
+    </tr>
+  </thead>
+  <tbody>
+    <% if pending_invitations.empty? %>
+      <tr>
+        <td colspan="3"><%= t(".no_pending") %></td>
+      </tr>
+    <% else %>
+      <% pending_invitations.each do |invitation| %>
+        <tr data-testid="pending-invitation-row" class="hover:bg-base-200 transition-colors">
+          <%= render RailsFoundry::Table::BodyCellComponent.new do %>
+            <%= invitation.email %>
+          <% end %>
+          <%= render RailsFoundry::Table::BodyCellComponent.new do %>
+            <%= invitation.invited_by_user.full_name %>
+          <% end %>
+          <%= render RailsFoundry::Table::BodyCellComponent.new do %>
+            <%= l(invitation.expires_at, format: :short) %>
+          <% end %>
+        </tr>
+      <% end %>
+    <% end %>
+  </tbody>
+<% end %>

@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "modal" do %>
+  <%= render UI::ModalComponent.new(title: t(".title"), size: :sm) do %>
+    <p class="text-sm text-base-content/70 mb-4">
+      <%= t(".current_email", email: Current.user.email) %>
+    </p>
+
+    <%= render "form", form: @form %>
+  <% end %>
+<% end %>

@@ -1,0 +1,46 @@
+en:
+  public:
+    sessions:
+      new:
+        title: "Sign In"
+        submit: "Sign In"
+        forgot_password: "Forgot your password?"
+        no_account: "Don't have an account?"
+        sign_up: "Sign up"
+    registrations:
+      new:
+        title: "Create your account"
+        first_name_label: "First name"
+        last_name_label: "Last name"
+        submit: "Create account"
+        has_account: "Already have an account?"
+        sign_in: "Sign in"
+    password_resets:
+      new:
+        title: "Forgot your password?"
+        instructions: "Enter your email address and we'll send you a link to reset your password."
+        submit: "Send reset link"
+        back_to_login: "Back to sign in"
+      create:
+        notice: "If that email is associated with an account, you'll receive a reset link shortly."
+      edit:
+        title: "Set a new password"
+        password_confirmation_label: "Confirm new password"
+        submit: "Reset password"
+        invalid_token: "That password reset link is invalid or has expired. Please request a new one."
+      update:
+        notice: "Your password has been reset. Please sign in with your new password."
+    email_verifications:
+      show:
+        title: "Verify your email"
+        instructions: "Check your inbox for a verification link. If your link has expired, request a new one from the unverified email banner after signing in."
+        invalid_token: "That verification link is invalid or has expired."
+        success: "Your email address has been verified."
+        back_to_login: "Back to sign in"
+      resend:
+        submit: "Resend verification email"
+        notice: "If your address is unverified, a new verification email has been sent."
+    email_changes:
+      show:
+        success: "Your email address has been updated."
+        invalid_token: "That email change link is invalid or has expired. Please request a new email change."

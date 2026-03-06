@@ -1,0 +1,23 @@
+{
+  "_comment": [
+    "Claude Desktop MCP config snippet.",
+    "Merge the mcpServers block into:",
+    "  macOS: ~/Library/Application Support/Claude/claude_desktop_config.json",
+    "  Windows: %APPDATA%\\Claude\\claude_desktop_config.json",
+    "",
+    "Replace /absolute/path/to/project with the actual path on your machine.",
+    "STRIPE_API_KEY must be set in your environment (source .env.local or use direnv).",
+    "After editing, restart Claude Desktop."
+  ],
+  "mcpServers": {
+    "rails": {
+      "command": "/absolute/path/to/project/bin/mcp"
+    },
+    "stripe": {
+      "command": "stripe-mcp",
+      "env": {
+        "STRIPE_API_KEY": "YOUR_STRIPE_KEY_HERE"
+      }
+    }
+  }
+}

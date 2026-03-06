@@ -1,0 +1,135 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+ENV_EXAMPLE="$ROOT_DIR/.env.example"
+ENV_FILE="$ROOT_DIR/.env"
+
+usage() {
+  cat <<EOF
+Usage: bin/foundry <command>
+
+Commands:
+  setup            Initialise a new app from this template — writes .env from .env.example
+  export-secrets   Export Rails credentials to .env.local for MCP server consumption
+
+Run 'bin/foundry setup' to get started.
+EOF
+}
+
+cmd_setup() {
+  # Ensure .env.example exists
+  if [[ ! -f "$ENV_EXAMPLE" ]]; then
+    echo "Error: $ENV_EXAMPLE not found." >&2
+    exit 1
+  fi
+
+  # If .env already exists, ask before overwriting
+  if [[ -f "$ENV_FILE" ]]; then
+    printf ".env already exists. Overwrite? [y/N] "
+    read -r answer
+    case "$answer" in
+      [yY]) ;;
+      *) echo "Aborted. .env was not modified."; exit 0 ;;
+    esac
+  fi
+
+  # Extract defaults from .env.example
+  default_name=$(grep -E '^APP_NAME=' "$ENV_EXAMPLE" | head -1 | cut -d= -f2- | tr -d '\r')
+  default_id=$(grep -E '^APP_IDENTIFIER=' "$ENV_EXAMPLE" | head -1 | cut -d= -f2- | tr -d '\r')
+
+  [[ -z "$default_name" ]] && default_name="RailsFoundry"
+  [[ -z "$default_id" ]]   && default_id="railsfoundry"
+
+  # Prompt for values
+  printf "APP_NAME [%s]: " "$default_name"
+  read -r input_name
+  APP_NAME="${input_name:-$default_name}"
+
+  printf "APP_IDENTIFIER [%s]: " "$default_id"
+  read -r input_id
+  APP_IDENTIFIER="${input_id:-$default_id}"
+
+  # Generate .env from .env.example, replacing APP_NAME and APP_IDENTIFIER lines
+  export APP_NAME APP_IDENTIFIER
+  ruby -pe '
+    $_.gsub!(/^APP_NAME=.*$/, "APP_NAME=" + ENV.fetch("APP_NAME"))
+    $_.gsub!(/^APP_IDENTIFIER=.*$/, "APP_IDENTIFIER=" + ENV.fetch("APP_IDENTIFIER"))
+  ' "$ENV_EXAMPLE" > "$ENV_FILE"
+
+  # Ensure file ends with a newline
+  last_char=$(tail -c1 "$ENV_FILE")
+  if [[ -n "$last_char" ]]; then
+    echo "" >> "$ENV_FILE"
+  fi
+
+  echo ""
+  echo ".env written with APP_NAME=\"$APP_NAME\" and APP_IDENTIFIER=\"$APP_IDENTIFIER\"."
+  echo ""
+  echo "Next steps:"
+  echo "  bin/rails db:create db:migrate"
+  echo "  bin/dev"
+}
+
+cmd_export_secrets() {
+  local env_local="$ROOT_DIR/.env.local"
+  local rails="$ROOT_DIR/bin/rails"
+
+  echo "Extracting secrets from Rails credentials..."
+
+  stripe_key=$(
+    "$rails" runner "print Rails.application.credentials.dig(:stripe, :secret_key).to_s" 2>/dev/null
+  ) || {
+    echo "Error: Rails runner failed. Ensure the app environment is properly configured." >&2
+    exit 1
+  }
+
+  if [[ -z "$stripe_key" ]]; then
+    echo "Error: stripe.secret_key not found in Rails credentials." >&2
+    echo "" >&2
+    echo "Add it with:" >&2
+    echo "  bin/rails credentials:edit" >&2
+    echo "" >&2
+    echo "Under the stripe namespace:" >&2
+    echo "  stripe:" >&2
+    echo "    secret_key: sk_live_..." >&2
+    exit 1
+  fi
+
+  # Write or update STRIPE_API_KEY in .env.local, preserving any other lines
+  if [[ -f "$env_local" ]] && grep -q '^STRIPE_API_KEY=' "$env_local"; then
+    STRIPE_API_KEY="$stripe_key" ruby -i -pe \
+      '$_.gsub!(/^STRIPE_API_KEY=.*$/, "STRIPE_API_KEY=" + ENV.fetch("STRIPE_API_KEY"))' \
+      "$env_local"
+  else
+    printf 'STRIPE_API_KEY=%s\n' "$stripe_key" >> "$env_local"
+  fi
+
+  echo ""
+  echo "Secrets exported to .env.local"
+  echo ""
+  echo "Next steps:"
+  echo "  1. Copy the MCP config:  cp .mcp.json.example .mcp.json"
+  echo "  2. Source the env vars:  source .env.local"
+  echo "  3. Restart Claude Code to activate MCP servers."
+}
+
+# ---- main ----
+
+if [[ $# -eq 0 ]]; then
+  usage
+  exit 0
+fi
+
+case "$1" in
+  setup)           cmd_setup ;;
+  export-secrets)  cmd_export_secrets ;;
+  help|--help|-h)  usage; exit 0 ;;
+  *)
+    echo "Unknown command: $1" >&2
+    echo "" >&2
+    usage >&2
+    exit 1
+    ;;
+esac

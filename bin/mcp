@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+# bin/mcp — Start the Rails MCP server for this project.
+#
+# The Rails MCP server (rails-mcp-server) exposes codebase context
+# (models, routes, schema, jobs, gems) to AI agents via the Model Context
+# Protocol over stdio.
+#
+# Usage:
+#   bin/mcp                     # start the server
+#   bin/mcp --help              # pass flags to rails-mcp-server
+#
+# Prerequisites:
+#   Node 18+ with npm. Install the server globally or rely on npx:
+#     npm install -g rails-mcp-server
+#
+# See .mcp/ for MCP client connection examples (Claude Desktop, Cursor, VS Code).
+# See docs/ai/MCP.md for the full architecture and workflow.
+
+set -euo pipefail
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ROOT_DIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+
+_info() {
+  echo "Rails MCP Server" >&2
+  echo "  Project root : $ROOT_DIR" >&2
+  echo "  Transport    : stdio" >&2
+  echo "" >&2
+  echo "Connect your MCP client using one of the examples in .mcp/" >&2
+  echo "or copy .mcp.json.example → .mcp.json and restart your agent." >&2
+  echo "" >&2
+}
+
+if command -v rails-mcp-server &>/dev/null; then
+  _info
+  exec rails-mcp-server --project-root "$ROOT_DIR" "$@"
+elif command -v npx &>/dev/null; then
+  _info
+  # --yes skips the "install this package?" prompt on first run
+  exec npx --yes rails-mcp-server --project-root "$ROOT_DIR" "$@"
+else
+  echo "Error: rails-mcp-server not found and npx is unavailable." >&2
+  echo "" >&2
+  echo "Install Node 18+ from https://nodejs.org/, then:" >&2
+  echo "  npm install -g rails-mcp-server" >&2
+  echo "" >&2
+  echo "Or install Node via Homebrew (macOS):" >&2
+  echo "  brew install node" >&2
+  exit 1
+fi

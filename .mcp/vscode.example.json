@@ -1,0 +1,23 @@
+{
+  "_comment": [
+    "VS Code GitHub Copilot MCP config — copy this file to .vscode/mcp.json.",
+    ".vscode/mcp.json is workspace-local and gitignored by convention.",
+    "Requires VS Code with the GitHub Copilot extension (v1.99+).",
+    "",
+    "The 'command' is relative to the workspace root when cwd is omitted.",
+    "Restart VS Code after creating this file."
+  ],
+  "servers": {
+    "rails": {
+      "type": "stdio",
+      "command": "bin/mcp"
+    },
+    "stripe": {
+      "type": "stdio",
+      "command": "stripe-mcp",
+      "env": {
+        "STRIPE_API_KEY": "${env:STRIPE_API_KEY}"
+      }
+    }
+  }
+}

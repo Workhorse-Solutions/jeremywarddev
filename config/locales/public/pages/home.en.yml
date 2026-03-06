@@ -1,0 +1,8 @@
+en:
+  public:
+    pages:
+      home:
+        title: "Welcome"
+        heading: "Your app starts here"
+        description: "Replace this placeholder with your landing page content."
+        cta: "Get started"

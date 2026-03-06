@@ -1,0 +1,21 @@
+---
+EnableDefaultLinters: true
+
+linters:
+  ErbSafety:
+    enabled: false  # Requires better_html; enable if added later
+
+  Rubocop:
+    enabled: false  # Avoid double-reporting; bin/rubocop covers Ruby
+
+  SelfClosingTag:
+    enabled: true
+
+  TrailingWhitespace:
+    enabled: true
+
+  NoUnusedCaptures:
+    enabled: true
+
+  RequireInputAutocomplete:
+    enabled: true

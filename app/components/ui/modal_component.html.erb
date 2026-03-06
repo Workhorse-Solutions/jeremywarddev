@@ -1,0 +1,45 @@
+<% if as_dialog? %>
+  <dialog id="<%= id %>" class="modal"<%= " open" if open %> aria-labelledby="<%= title_id %>">
+    <div class="modal-box relative <%= size_class %>">
+      <form method="dialog">
+        <button class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" value="" aria-label="<%= close_label %>">✕</button>
+      </form>
+
+      <%= tag.h3 title, **title_tag_options %>
+
+      <div class="py-4">
+        <%= content %>
+      </div>
+
+      <% if footer? %>
+        <div class="modal-action">
+          <%= footer %>
+        </div>
+      <% end %>
+    </div>
+
+    <form method="dialog" class="modal-backdrop bg-black/40">
+      <button value=""></button>
+    </form>
+  </dialog>
+<% else %>
+  <div class="<%= modal_classes %>" data-controller="modal" role="dialog" aria-modal="true" aria-labelledby="<%= title_id %>">
+    <div class="modal-box relative <%= size_class %>">
+      <button type="button" class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" aria-label="<%= close_label %>" data-action="click->modal#close">✕</button>
+
+      <%= tag.h3 title, **title_tag_options %>
+
+      <div class="py-4">
+        <%= content %>
+      </div>
+
+      <% if footer? %>
+        <div class="modal-action">
+          <%= footer %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="modal-backdrop bg-black/40" data-action="click->modal#close"></div>
+  </div>
+<% end %>

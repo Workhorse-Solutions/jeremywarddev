@@ -1,0 +1,47 @@
+<% content_for :title, "Dashboard — RailsFoundry" %>
+
+<%= render UI::Authenticated::PageHeaderComponent.new(title: "Dashboard", description: "Welcome back. Here's what's happening.") %>
+
+<%# Stats %>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+  <div class="stat bg-base-200 rounded-box">
+    <div class="stat-title">Total Users</div>
+    <div class="stat-value">0</div>
+    <div class="stat-desc">No users yet</div>
+  </div>
+  <div class="stat bg-base-200 rounded-box">
+    <div class="stat-title">Revenue</div>
+    <div class="stat-value">$0</div>
+    <div class="stat-desc">Billing not configured</div>
+  </div>
+  <div class="stat bg-base-200 rounded-box">
+    <div class="stat-title">Uptime</div>
+    <div class="stat-value">100%</div>
+    <div class="stat-desc">All systems operational</div>
+  </div>
+</div>
+
+<%# Onboarding checklist %>
+<div class="card bg-base-200 max-w-xl">
+  <div class="card-body">
+    <h2 class="card-title">Getting started</h2>
+    <ul class="space-y-3 mt-2">
+      <li class="flex items-center gap-3">
+        <input type="checkbox" class="checkbox checkbox-primary" checked disabled>
+        <span>Rails app running</span>
+      </li>
+      <li class="flex items-center gap-3">
+        <input type="checkbox" class="checkbox" disabled>
+        <span>Configure authentication</span>
+      </li>
+      <li class="flex items-center gap-3">
+        <input type="checkbox" class="checkbox" disabled>
+        <span>Set up billing with Stripe</span>
+      </li>
+      <li class="flex items-center gap-3">
+        <input type="checkbox" class="checkbox" disabled>
+        <span>Invite your first user</span>
+      </li>
+    </ul>
+  </div>
+</div>

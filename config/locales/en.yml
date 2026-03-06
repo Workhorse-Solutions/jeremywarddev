@@ -1,0 +1,194 @@
+# Files in the config/locales directory are used for internationalization and
+# are automatically loaded by Rails. If you want to use locales other than
+# English, add the necessary files in this directory.
+#
+# To use the locales, use `I18n.t`:
+#
+#     I18n.t "hello"
+#
+# In views, this is aliased to just `t`:
+#
+#     <%= t("hello") %>
+#
+# To use a different locale, set it with `I18n.locale`:
+#
+#     I18n.locale = :es
+#
+# This would use the information in config/locales/es.yml.
+#
+# To learn more about the API, please read the Rails Internationalization guide
+# at https://guides.rubyonrails.org/i18n.html.
+#
+# Be aware that YAML interprets the following case-insensitive strings as
+# booleans: `true`, `false`, `on`, `off`, `yes`, `no`. Therefore, these strings
+# must be quoted to be interpreted as strings. For example:
+#
+#     en:
+#       "yes": yup
+#       enabled: "ON"
+
+en:
+  activemodel:
+    errors:
+      models:
+        invitation_form:
+          attributes:
+            email:
+              already_a_member: "This person is already a member."
+              invitation_pending: "An invitation for this email is already pending."
+  invitation_mailer:
+    invite_email:
+      subject: "You've been invited to join %{account_name}"
+      heading: "You're invited!"
+      greeting: "%{inviter_name} has invited you to join %{account_name}."
+      accept_link: "Accept invitation"
+      expiry_notice: "This invitation expires in 7 days."
+  authenticated:
+    layout:
+      app_name: "RailsFoundry"
+      nav:
+        dashboard: "Dashboard"
+        team: "Team"
+        account: "Account"
+        settings: "Settings"
+      sections:
+        main: "Main"
+        account: "Account"
+      greeting:
+        morning: "Good Morning"
+        afternoon: "Good Afternoon"
+        evening: "Good Evening"
+      sign_out: "Sign Out"
+      open_mobile_menu_aria: "Open menu"
+      confirm_dialog:
+        confirm: "Confirm"
+        cancel: "Cancel"
+    impersonation_banner:
+      message: "Impersonating %{name}"
+      stop: "Stop impersonating"
+    email_verification_banner:
+      message: "Your email address has not been verified."
+      resend: "Resend verification email"
+    email_verifications:
+      resend:
+        notice: "Verification email sent. Please check your inbox."
+    team:
+      pending_invitations_table:
+        email: "Email"
+        invited_by: "Invited By"
+        expires: "Expires"
+        no_pending: "No pending invitations."
+      index:
+        title: "Team Members"
+        heading: "Team Members"
+        description: "People who belong to your account."
+        no_members: "No team members yet."
+        tab_bar:
+          members: "Members"
+          pending_invitations: "Pending Invitations"
+        table:
+          name: "Name"
+          email: "Email"
+          role: "Role"
+          actions: "Actions"
+        remove_button: "Remove"
+        confirm_remove: "Are you sure you want to remove this team member? This action cannot be undone."
+        invite:
+          heading: "Invite Member"
+          email_label: "Email address"
+          email_placeholder: "colleague@example.com"
+          submit: "Send Invitation"
+        pending:
+          heading: "Pending Invitations"
+          invited_by: "Invited By"
+          expires: "Expires"
+    invitations:
+      new:
+        title: "Invite a Team Member"
+        email_label: "Email address"
+        email_placeholder: "colleague@example.com"
+        submit: "Send Invitation"
+      create:
+        notice: "Invitation sent to %{email}."
+      unauthorized: "You do not have permission to manage team members."
+    team_members:
+      destroy:
+        notice: "%{name} has been removed from %{account_name}."
+        last_owner_error: "You cannot remove the last owner of an account."
+        cannot_remove_owner: "You do not have permission to remove an owner."
+    settings:
+      accounts:
+        edit:
+          title: "Account Settings"
+          heading: "Account Settings"
+          name_label: "Account Name"
+          slug_label: "Slug"
+          submit: "Save Changes"
+          billing:
+            heading: "Billing"
+            status: "Billing Status"
+            trial_ends_at: "Trial Ends"
+            not_applicable: "—"
+        unauthorized: "You do not have permission to access account settings."
+        update:
+          notice: "Account updated successfully."
+      profiles:
+        edit:
+          title: "Profile Settings"
+          personal_details:
+            heading: "Personal Details"
+            first_name_label: "First Name"
+            last_name_label: "Last Name"
+            submit: "Save Changes"
+          security:
+            heading: "Security"
+            email_label: "Email Address"
+            change_email: "Change email"
+            current_password_label: "Current Password"
+            new_password_label: "New Password"
+            password_confirmation_label: "Confirm New Password"
+            submit: "Update Password"
+        update:
+          notice: "Profile updated successfully."
+        update_password:
+          notice: "Password updated successfully."
+    email_changes:
+      edit:
+        title: "Change email address"
+        current_email: "Current email: %{email}"
+        new_email_label: "New email address"
+        current_password_label: "Current password"
+        submit: "Request email change"
+      update:
+        notice: "A confirmation link has been sent to your new email address."
+  public:
+    invitations:
+      show:
+        title: "Accept Invitation"
+        heading: "You're invited!"
+        error_heading: "Invitation Error"
+        invited_to: "%{inviter_name} has invited you to join %{account_name}."
+        accept_button: "Accept Invitation"
+      errors:
+        invalid_or_expired: "This invitation is invalid or has expired."
+        already_used: "This invitation has already been used."
+        wrong_email: "This invitation was sent to a different email address."
+      login_to_accept: "Please log in to accept the invitation."
+      signup_to_accept: "Please sign up to accept the invitation."
+      accepted: "You have joined the team!"
+    layout:
+      app_name: "RailsFoundry"
+      header:
+        get_started: "Get Started"
+        sign_in: "Sign In"
+        open_sidebar_aria: "Open sidebar"
+        close_sidebar_aria: "Close sidebar"
+      nav:
+        home: "Home"
+        features: "Features"
+        how_it_works: "How It Works"
+        pricing: "Pricing"
+        faq: "FAQ"
+        dashboard: "Dashboard"
+      footer:
+        copyright: "RailsFoundry"

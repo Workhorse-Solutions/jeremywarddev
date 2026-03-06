@@ -1,0 +1,9 @@
+Confirm your new email address
+
+Hi <%= @user.full_name.presence || @user.email %>,
+
+You requested to change your email address. Please confirm your new email by visiting the link below.
+
+<%= @confirm_url %>
+
+This link expires in 24 hours. If you didn't request this change, you can ignore this email.

@@ -1,0 +1,11 @@
+<%= turbo_stream.replace "modal" do %>
+  <%= turbo_frame_tag "modal" do %>
+    <%= render UI::ModalComponent.new(title: t("authenticated.email_changes.edit.title"), size: :sm) do %>
+      <p class="text-sm text-base-content/70 mb-4">
+        <%= t("authenticated.email_changes.edit.current_email", email: Current.user.email) %>
+      </p>
+
+      <%= render "form", form: @form %>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,0 +1,47 @@
+<div data-controller="tabs">
+  <% if wrap_tab_bar_in_frame? %>
+    <%= helpers.turbo_frame_tag tab_bar_frame do %>
+      <div role="tablist" class="tabs tabs-bordered mb-6 border-b border-gray-300">
+        <% tabs.each_with_index do |tab, i| %>
+          <button type="button"
+                  role="tab"
+                  class="tab <%= i.zero? ? 'tab-active font-semibold text-primary border-b-2 border-primary' : 'text-base-content/60 hover:text-base-content' %>"
+                  data-tabs-target="tab"
+                  data-action="click->tabs#select"
+                  data-tabs-index-param="<%= i %>">
+            <%= tab.label %>
+            <% if tab.badge %>
+              <span class="badge badge-sm ml-1 text-sky-800 bg-sky-100 border border-sky-200">
+                <%= tab.badge %>
+              </span>
+            <% end %>
+          </button>
+        <% end %>
+      </div>
+    <% end %>
+  <% else %>
+    <div role="tablist" class="tabs tabs-bordered mb-6 border-b border-gray-300">
+      <% tabs.each_with_index do |tab, i| %>
+        <button type="button"
+                role="tab"
+                class="tab <%= i.zero? ? 'tab-active font-semibold text-primary border-b-2 border-primary' : 'text-base-content/60 hover:text-base-content' %>"
+                data-tabs-target="tab"
+                data-action="click->tabs#select"
+                data-tabs-index-param="<%= i %>">
+          <%= tab.label %>
+          <% if tab.badge %>
+            <span class="badge badge-sm ml-1 text-sky-800 bg-sky-100 border border-sky-200">
+              <%= tab.badge %>
+            </span>
+          <% end %>
+        </button>
+      <% end %>
+    </div>
+  <% end %>
+
+  <% panels.each_with_index do |panel, i| %>
+    <div class="<%= i.zero? ? '' : 'hidden' %>" data-tabs-target="panel">
+      <%= panel %>
+    </div>
+  <% end %>
+</div>

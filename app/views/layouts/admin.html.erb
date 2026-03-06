@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html class="h-full bg-base-200">
+  <head>
+    <title><%= content_for(:title) || t("admin.layout.title") %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= stylesheet_link_tag :tailwind, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="h-full">
+    <div class="flex h-full">
+      <!-- Admin Sidebar -->
+      <aside class="hidden w-64 flex-col border-r border-base-300 bg-base-100 lg:flex">
+        <div class="flex h-16 items-center justify-between border-b border-base-300 px-5">
+          <%= link_to t("admin.layout.title"), admin_users_path, class: "text-xl font-bold text-error" %>
+        </div>
+
+        <nav class="flex-1 overflow-y-auto py-4">
+          <ul class="menu menu-sm px-2">
+            <li><%= link_to admin_users_path, class: "menu-item #{current_page?(admin_users_path) ? 'active' : ''}" do %>
+              <span class="size-5"><%= heroicon "users", variant: :mini %></span>
+              <span><%= t("admin.layout.nav.users") %></span>
+            <% end %></li>
+            <li><%= link_to dashboard_path, class: "menu-item" do %>
+              <span class="size-5"><%= heroicon "arrow-left", variant: :mini %></span>
+              <span><%= t("admin.layout.nav.back_to_app") %></span>
+            <% end %></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Content Area -->
+      <div class="flex min-w-0 flex-1 flex-col">
+        <header class="flex h-16 items-center justify-between border-b border-base-300 bg-base-100 px-4 lg:px-6">
+          <div class="flex items-center gap-2">
+            <span class="badge badge-error"><%= t("admin.layout.badge") %></span>
+            <p class="font-medium"><%= Current.user.full_name %></p>
+          </div>
+
+          <div>
+            <%= link_to logout_path, data: { turbo_method: :delete }, class: "btn btn-ghost btn-sm text-error" do %>
+              <span class="size-5"><%= heroicon "arrow-right-on-rectangle", variant: :mini %></span>
+              <span><%= t("authenticated.layout.sign_out") %></span>
+            <% end %>
+          </div>
+        </header>
+
+        <main class="flex-1 overflow-auto p-4 lg:p-6">
+          <%= turbo_frame_tag "flash" do %>
+            <%= render UI::ToastsComponent.new(flash: flash) %>
+          <% end %>
+          <%= yield %>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

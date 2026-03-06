@@ -1,0 +1,6 @@
+<%= turbo_stream.replace "email-verification-banner" do %>
+  <div id="email-verification-banner" class="alert alert-success mb-4" role="status">
+    <span class="size-5"><%= heroicon "check-circle", variant: :mini %></span>
+    <span><%= t("authenticated.email_verifications.resend.notice") %></span>
+  </div>
+<% end %>

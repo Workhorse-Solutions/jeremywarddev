@@ -1,0 +1,35 @@
+<%= form_with model: form, url: edit_email_settings_path, scope: :email_change, method: :patch, class: "space-y-4" do |f| %>
+  <%= render Form::ControlComponent.new(
+    form: f,
+    attribute: :new_email,
+    label: t("authenticated.email_changes.edit.new_email_label")
+  ) do |field| %>
+    <% field.with_input do %>
+      <%= render Form::InputComponent.new(
+        form: f,
+        attribute: :new_email,
+        type: :email,
+        input_html: { autocomplete: "email", autofocus: true, required: true }
+      ) %>
+    <% end %>
+  <% end %>
+
+  <%= render Form::ControlComponent.new(
+    form: f,
+    attribute: :current_password,
+    label: t("authenticated.email_changes.edit.current_password_label")
+  ) do |field| %>
+    <% field.with_input do %>
+      <%= render Form::InputComponent.new(
+        form: f,
+        attribute: :current_password,
+        type: :password,
+        input_html: { autocomplete: "current-password", required: true }
+      ) %>
+    <% end %>
+  <% end %>
+
+  <div class="mt-4">
+    <%= f.submit t("authenticated.email_changes.edit.submit"), class: "btn btn-primary w-full" %>
+  </div>
+<% end %>

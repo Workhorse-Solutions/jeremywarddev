@@ -1,0 +1,21 @@
+<aside class="hidden w-64 flex-col border-r border-base-300 bg-base-100 lg:flex" data-testid="sidebar">
+  <div class="flex h-16 items-center justify-between border-b border-base-300 px-5">
+    <%= helpers.link_to brand_label, brand_href, class: "text-xl font-bold text-primary" %>
+  </div>
+
+  <nav class="flex-1 overflow-y-auto py-4">
+    <% nav_sections.each do |section| %>
+      <ul class="menu menu-sm px-2">
+        <li class="menu-title" data-testid="nav-section-label"><%= section[:label] %></li>
+        <% section[:items].each do |item| %>
+          <li>
+            <%= helpers.link_to item[:href], class: "menu-item #{helpers.current_page?(item[:href]) ? 'active' : ''}" do %>
+              <span class="size-5"><%= helpers.heroicon item[:icon], variant: :mini %></span>
+              <span><%= item[:label] %></span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </nav>
+</aside>

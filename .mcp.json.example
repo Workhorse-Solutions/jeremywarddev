@@ -1,0 +1,27 @@
+{
+  "_comment": [
+    "Root-level Claude Code workspace MCP config — copy this file to .mcp.json.",
+    ".mcp.json is gitignored. Never commit it.",
+    "",
+    "Quick start:",
+    "  1. npm install -g rails-mcp-server",
+    "  2. bin/foundry export-secrets    (writes STRIPE_API_KEY to .env.local)",
+    "  3. source .env.local             (or configure direnv)",
+    "  4. cp .mcp.json.example .mcp.json",
+    "  5. Restart your agent (Claude Code / Cursor / etc.)",
+    "",
+    "See .mcp/ for per-client examples (Claude Desktop, Cursor, VS Code).",
+    "See docs/ai/MCP.md for full architecture docs."
+  ],
+  "mcpServers": {
+    "rails": {
+      "command": "bin/mcp"
+    },
+    "stripe": {
+      "command": "stripe-mcp",
+      "env": {
+        "STRIPE_API_KEY": "${STRIPE_API_KEY}"
+      }
+    }
+  }
+}

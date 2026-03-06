@@ -1,0 +1,35 @@
+en:
+  admin:
+    layout:
+      title: "Admin"
+      badge: "Admin"
+      nav:
+        users: "Users"
+        back_to_app: "Back to app"
+    users:
+      index:
+        title: "Users"
+        search_placeholder: "Search by name or email..."
+        search_submit: "Search"
+        table:
+          name: "Name"
+          email: "Email"
+          verified: "Verified"
+          created_at: "Created"
+          actions: "Actions"
+        verified_yes: "Verified"
+        verified_no: "Unverified"
+        verify_action: "Verify"
+        force_reset_action: "Force Reset"
+        impersonate_action: "Impersonate"
+      verify_email:
+        success: "User email has been marked as verified."
+        already_verified: "User email is already verified."
+      force_password_reset:
+        success: "Password reset email has been sent."
+    impersonations:
+      start:
+        success: "Now impersonating %{name}."
+        already_impersonating: "You are already impersonating a user. Stop the current impersonation first."
+      stop:
+        success: "Impersonation ended."

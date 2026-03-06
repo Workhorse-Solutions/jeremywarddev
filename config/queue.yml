@@ -1,0 +1,25 @@
+# Queue topology (highest → lowest priority): billing → mailers → default
+# Workers process all queues in priority order from a single pool.
+#
+# Starting workers:
+#   bin/jobs                  — dedicated worker process (recommended for production)
+#   SOLID_QUEUE_IN_PUMA=1     — embedded in Puma (single-server / Heroku-style deployments)
+
+default: &default
+  dispatchers:
+    - polling_interval: 1
+      batch_size: 500
+  workers:
+    - queues: [billing, mailers, default]
+      threads: 3
+      processes: <%= ENV.fetch("JOB_CONCURRENCY", 1) %>
+      polling_interval: 0.1
+
+development:
+  <<: *default
+
+test:
+  <<: *default
+
+production:
+  <<: *default

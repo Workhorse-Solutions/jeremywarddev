@@ -1,0 +1,5 @@
+<div class="toast toast-top toast-end z-50">
+  <% entries.each do |type, message| %>
+    <%= render UI::ToastComponent.new(message: message, type: type, timeout_ms: timeout_ms, close_label: close_label) %>
+  <% end %>
+</div>

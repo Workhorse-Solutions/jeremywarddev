@@ -1,0 +1,7 @@
+<ul class="<%= ul_class %>">
+  <% items.each do |item| %>
+    <li class="<%= li_class %>">
+      <%= link_to item[:label], item[:href], **(active?(item) ? { "aria-current": "page", class: "active" } : {}) %>
+    </li>
+  <% end %>
+</ul>

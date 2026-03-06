@@ -1,0 +1,68 @@
+<% content_for :title, t(".title") %>
+
+<%= render UI::Authenticated::PageHeaderComponent.new(title: t(".heading"), description: t(".description")) do |header| %>
+  <% header.with_actions do %>
+    <%= render UI::Authenticated::PageHeaderActionsComponent.new(
+      can_manage: current_account_user&.can_manage_members?,
+      label: t(".invite.heading"),
+      href: new_team_invitation_path,
+      turbo_frame: "modal"
+    ) %>
+  <% end %>
+<% end %>
+
+<%= render RailsFoundry::TabsComponent.new(tab_bar_frame: "team-tab-bar") do |tabs_component| %>
+  <% tabs_component.with_tab(label: t(".tab_bar.members")) %>
+  <% tabs_component.with_tab(label: t(".tab_bar.pending_invitations"),
+                             badge: @pending_invitations&.size || 0,
+                             visible: current_account_user&.can_manage_members?) %>
+  <% tabs_component.with_panel do %>
+    <%= render RailsFoundry::TableComponent.new(id: "team-members", pagy: @pagy) do %>
+      <thead>
+        <tr>
+          <%= render RailsFoundry::Table::HeaderCellComponent.new(label: t(".table.name"), sort_key: :name) %>
+          <%= render RailsFoundry::Table::HeaderCellComponent.new(label: t(".table.email"), sort_key: :email) %>
+          <%= render RailsFoundry::Table::HeaderCellComponent.new(label: t(".table.role"), sort_key: :role) %>
+          <%= render RailsFoundry::Table::HeaderCellComponent.new(label: t(".table.actions")) %>
+        </tr>
+      </thead>
+      <tbody>
+        <% if @account_users.empty? %>
+          <tr>
+            <td colspan="3"><%= t(".no_members") %></td>
+          </tr>
+        <% else %>
+          <% role_colors = { "owner" => :primary, "admin" => :secondary } %>
+          <% @account_users.each do |account_user| %>
+            <tr data-testid="team-member-row" class="hover:bg-base-200 transition-colors">
+              <%= render RailsFoundry::Table::BodyCellComponent.new do %>
+                <%= account_user.user.full_name %>
+              <% end %>
+              <%= render RailsFoundry::Table::BodyCellComponent.new do %>
+                <%= account_user.user.email %>
+              <% end %>
+              <%= render RailsFoundry::Table::BodyCellComponent.new do %>
+                <%= render UI::BadgeComponent.new(label: account_user.role, color: role_colors.fetch(account_user.role, :ghost)) %>
+              <% end %>
+              <%= render RailsFoundry::Table::BodyCellComponent.new do %>
+                <% if current_account_user&.can_manage_members? %>
+                  <%= button_to team_member_path(account_user), method: :delete, class: "btn btn-error btn-sm btn-square",
+                      form: { data: { turbo_confirm: t(".confirm_remove") } },
+                      data: { testid: "remove-member-button" },
+                      aria: { label: t(".remove_button") } do %>
+                    <span class="size-5"><%= heroicon "trash", variant: :mini %></span>
+                  <% end %>
+                <% end %>
+              <% end %>
+            </tr>
+          <% end %>
+        <% end %>
+      </tbody>
+    <% end %>
+  <% end %>
+  <% if current_account_user&.can_manage_members? %>
+    <% tabs_component.with_panel do %>
+      <%= render "pending_invitations_table", pending_invitations: @pending_invitations %>
+    <% end %>
+  <% end %>
+<% end %>

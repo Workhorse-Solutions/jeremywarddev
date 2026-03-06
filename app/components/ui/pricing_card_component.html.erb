@@ -1,0 +1,22 @@
+<div class="card <%= highlighted ? "bg-primary text-primary-content shadow-xl" : "bg-base-100" %> hover:shadow-md transition-shadow relative">
+  <% if badge %>
+    <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+      <span class="badge badge-secondary badge-lg font-semibold"><%= badge %></span>
+    </div>
+  <% end %>
+  <div class="card-body">
+    <h3 class="card-title text-lg"><%= name %></h3>
+    <p class="text-4xl font-extrabold my-2"><%= price %></p>
+    <p class="text-sm <%= highlighted ? "text-primary-content/80" : "text-base-content/60" %> mb-4"><%= tagline %></p>
+    <ul class="space-y-2 mb-6 flex-1">
+      <% features.each do |feature| %>
+        <li class="flex items-start gap-2 text-sm">
+          <span class="mt-0.5 shrink-0 <%= highlighted ? "text-primary-content/70" : "text-primary" %>">✓</span>
+          <%= feature %>
+        </li>
+      <% end %>
+    </ul>
+    <%= link_to cta_text, cta_href,
+          class: "btn btn-block #{highlighted ? "bg-white text-primary hover:bg-white/90 border-0" : "btn-primary"}" %>
+  </div>
+</div>

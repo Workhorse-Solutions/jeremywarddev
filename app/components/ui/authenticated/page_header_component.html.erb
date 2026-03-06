@@ -1,0 +1,16 @@
+<div class="mb-8 flex items-start justify-between gap-4">
+  <div>
+    <h1 class="text-3xl font-bold"><%= title %></h1>
+    <% if description %>
+      <p class="text-base-content/60 mt-1"><%= description %></p>
+    <% end %>
+  </div>
+  <% if actions? %>
+    <%- actions_html = actions.to_s -%>
+    <% if actions_html.present? %>
+      <div class="flex-shrink-0 self-center">
+        <%== actions_html %>
+      </div>
+    <% end %>
+  <% end %>
+</div>

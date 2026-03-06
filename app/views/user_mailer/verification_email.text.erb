@@ -1,0 +1,9 @@
+Verify your email address
+
+Hi <%= @user.full_name.presence || @user.email %>,
+
+Thanks for signing up! Please verify your email address by visiting the link below.
+
+<%= @verification_url %>
+
+This link expires in 30 days. If you didn't create an account, you can ignore this email.

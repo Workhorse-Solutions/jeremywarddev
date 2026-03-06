@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html class="h-full bg-base-200">
+  <head>
+    <title><%= content_for(:title) || t("authenticated.layout.app_name") %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="RailsFoundry">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%= stylesheet_link_tag :tailwind, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body class="h-full">
+    <div class="flex h-full">
+      <%= render UI::Authenticated::SidebarComponent.new(
+        brand_label: t("authenticated.layout.app_name"),
+        brand_href: dashboard_path,
+        nav_sections: [
+          {
+            label: t("authenticated.layout.sections.main"),
+            items: [
+              { label: t("authenticated.layout.nav.dashboard"), href: dashboard_path, icon: "home" }
+            ]
+          },
+          {
+            label: t("authenticated.layout.sections.account"),
+            items: [
+              { label: t("authenticated.layout.nav.team"), href: team_path, icon: "user-group" }
+            ]
+          }
+        ]
+      ) %>
+
+      <!-- Main Content Area -->
+      <div class="flex min-w-0 flex-1 flex-col">
+        <%= render UI::Authenticated::TopBarComponent.new(
+          mobile_menu_aria_label: t("authenticated.layout.open_mobile_menu_aria")
+        ) do |top_bar| %>
+          <% top_bar.with_greeting do %>
+            <%= render UI::Authenticated::GreetingComponent.new(
+              greetings: {
+                morning: t("authenticated.layout.greeting.morning"),
+                afternoon: t("authenticated.layout.greeting.afternoon"),
+                evening: t("authenticated.layout.greeting.evening")
+              },
+              user_first_name: Current.user.first_name,
+              account_name: Current.account&.name
+            ) %>
+          <% end %>
+          <% top_bar.with_user_dropdown do %>
+            <%= render UI::Authenticated::UserDropdownComponent.new(
+              user_full_name: Current.user.full_name,
+              user_email: Current.user.email,
+              user_initials: "#{Current.user.first_name&.first}#{Current.user.last_name&.first}",
+              menu_items: [
+                { label: t("authenticated.layout.nav.account"), href: edit_settings_account_path, icon: "building-office" },
+                { label: t("authenticated.layout.nav.settings"), href: edit_settings_profile_path, icon: "cog-6-tooth" }
+              ],
+              sign_out_label: t("authenticated.layout.sign_out"),
+              sign_out_href: logout_path
+            ) %>
+          <% end %>
+        <% end %>
+
+        <%= render UI::Authenticated::ImpersonationBannerComponent.new(
+          active: session[:impersonator_id].present?,
+          message: t("authenticated.impersonation_banner.message", name: Current.user.full_name),
+          stop_label: t("authenticated.impersonation_banner.stop"),
+          stop_href: admin_impersonation_path
+        ) %>
+
+        <!-- Page Content -->
+        <main class="flex-1 overflow-auto p-4 lg:p-6">
+          <%= turbo_frame_tag "flash" do %>
+            <%= render UI::ToastsComponent.new(flash: flash) %>
+          <% end %>
+
+          <%= render UI::Authenticated::EmailVerificationBannerComponent.new(
+            verified: Current.user.email_verified?
+          ) %>
+
+          <%= yield %>
+        </main>
+      </div>
+
+      <%= turbo_frame_tag "modal" %>
+
+      <!-- Drawer for slide-out panels -->
+      <div class="fixed inset-y-0 right-0 w-[45%] bg-base-100 shadow-xl transform transition-transform duration-300 ease-in-out translate-x-full z-50">
+        <%= turbo_frame_tag "drawer" %>
+      </div>
+    </div>
+
+    <%= render UI::Turbo::ConfirmComponent.new(
+      confirm_label: t("authenticated.layout.confirm_dialog.confirm"),
+      cancel_label: t("authenticated.layout.confirm_dialog.cancel")
+    ) %>
+  </body>
+</html>

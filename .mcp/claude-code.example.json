@@ -1,0 +1,20 @@
+{
+  "_comment": [
+    "Claude Code workspace MCP config — copy this file to .mcp.json at the project root.",
+    ".mcp.json is gitignored. Never commit it.",
+    "Run: bin/foundry export-secrets   to populate .env.local with STRIPE_API_KEY.",
+    "Source .env.local (or use direnv) before starting your agent session.",
+    "See .mcp/README.md and docs/ai/MCP.md for full setup instructions."
+  ],
+  "mcpServers": {
+    "rails": {
+      "command": "bin/mcp"
+    },
+    "stripe": {
+      "command": "stripe-mcp",
+      "env": {
+        "STRIPE_API_KEY": "${STRIPE_API_KEY}"
+      }
+    }
+  }
+}

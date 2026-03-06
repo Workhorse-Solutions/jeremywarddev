@@ -1,0 +1,9 @@
+<div class="<%= wrapper_class %>">
+  <% if label %>
+    <p class="<%= label_class %>"><%= label %></p>
+  <% end %>
+  <%= content_tag(tag, heading, class: heading_class) %>
+  <% if subheading %>
+    <p class="<%= subheading_class %>"><%= subheading %></p>
+  <% end %>
+</div>

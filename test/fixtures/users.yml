@@ -1,0 +1,20 @@
+alice:
+  email: alice@acme.com
+  password_digest: <%= BCrypt::Password.create("password") %>
+  first_name: Alice
+  last_name: Acme
+  system_admin: false
+
+admin_bob:
+  email: bob@acme.com
+  password_digest: <%= BCrypt::Password.create("password") %>
+  first_name: Bob
+  last_name: Admin
+  system_admin: true
+
+member_carol:
+  email: carol@acme.com
+  password_digest: <%= BCrypt::Password.create("password") %>
+  first_name: Carol
+  last_name: Member
+  system_admin: false

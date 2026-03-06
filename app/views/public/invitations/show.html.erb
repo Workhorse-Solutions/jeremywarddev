@@ -1,0 +1,19 @@
+<% content_for :title, t(".title") %>
+
+<div class="flex min-h-screen items-center justify-center">
+  <div class="card bg-base-100 shadow-xl w-full max-w-md">
+    <div class="card-body">
+      <% if @error %>
+        <h2 class="card-title text-error" data-testid="invitation-error"><%= t(".error_heading") %></h2>
+        <p><%= @error %></p>
+      <% else %>
+        <h2 class="card-title"><%= t(".heading") %></h2>
+        <p><%= t(".invited_to", account_name: @invitation.account.name, inviter_name: @invitation.invited_by_user.full_name) %></p>
+
+        <%= form_with url: accept_invitation_path(token: params[:token]), method: :post, class: "mt-4" do %>
+          <%= submit_tag t(".accept_button"), class: "btn btn-primary w-full" %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

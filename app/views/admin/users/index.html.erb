@@ -1,0 +1,59 @@
+<% content_for :title, t("admin.users.index.title") %>
+
+<h1 class="text-2xl font-bold mb-4"><%= t("admin.users.index.title") %></h1>
+
+<%= form_with url: admin_users_path, method: :get, class: "mb-6 flex gap-2" do |f| %>
+  <%= f.text_field :q, value: params[:q],
+    placeholder: t("admin.users.index.search_placeholder"),
+    class: "input input-bordered flex-1",
+    autocomplete: "off" %>
+  <%= f.submit t("admin.users.index.search_submit"), class: "btn btn-primary" %>
+<% end %>
+
+<div class="overflow-x-auto">
+  <table class="table table-zebra w-full">
+    <thead>
+      <tr>
+        <th><%= t("admin.users.index.table.name") %></th>
+        <th><%= t("admin.users.index.table.email") %></th>
+        <th><%= t("admin.users.index.table.verified") %></th>
+        <th><%= t("admin.users.index.table.created_at") %></th>
+        <th><%= t("admin.users.index.table.actions") %></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @users.each do |user| %>
+        <tr>
+          <td><%= user.full_name %></td>
+          <td><%= user.email %></td>
+          <td>
+            <% if user.email_verified? %>
+              <span class="badge badge-success"><%= t("admin.users.index.verified_yes") %></span>
+            <% else %>
+              <span class="badge badge-warning"><%= t("admin.users.index.verified_no") %></span>
+            <% end %>
+          </td>
+          <td><%= l(user.created_at, format: :short) %></td>
+          <td class="flex gap-1">
+            <% unless user.email_verified? %>
+              <%= button_to t("admin.users.index.verify_action"),
+                verify_email_admin_user_path(user),
+                method: :post,
+                class: "btn btn-xs btn-success" %>
+            <% end %>
+            <%= button_to t("admin.users.index.force_reset_action"),
+              force_password_reset_admin_user_path(user),
+              method: :post,
+              class: "btn btn-xs btn-warning" %>
+            <%= button_to t("admin.users.index.impersonate_action"),
+              impersonate_admin_user_path(user),
+              method: :post,
+              class: "btn btn-xs btn-info" %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%== @pagy.series_nav if @pagy.pages > 1 %>

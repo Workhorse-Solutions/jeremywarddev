@@ -1,0 +1,9 @@
+<% content_for :title, t(".title") %>
+
+<div class="min-h-screen flex items-center justify-center">
+  <div class="text-center max-w-lg px-4">
+    <h1 class="text-4xl font-bold mb-4"><%= t(".heading") %></h1>
+    <p class="text-lg mb-8 opacity-70"><%= t(".description") %></p>
+    <%= link_to t(".cta"), signup_path, class: "btn btn-primary btn-lg" %>
+  </div>
+</div>

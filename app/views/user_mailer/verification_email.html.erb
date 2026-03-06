@@ -1,0 +1,9 @@
+<h1>Verify your email address</h1>
+
+<p>Hi <%= @user.full_name.presence || @user.email %>,</p>
+
+<p>Thanks for signing up! Please verify your email address by clicking the link below.</p>
+
+<p><a href="<%= @verification_url %>">Verify email address</a></p>
+
+<p>This link expires in 30 days. If you didn't create an account, you can ignore this email.</p>

@@ -1,0 +1,21 @@
+{
+  "_comment": [
+    "Cursor IDE MCP config snippet.",
+    "Merge the mcpServers block into: ~/.cursor/mcp.json",
+    "(Create the file if it does not exist.)",
+    "",
+    "Replace /absolute/path/to/project with the actual path on your machine.",
+    "After editing, restart Cursor."
+  ],
+  "mcpServers": {
+    "rails": {
+      "command": "/absolute/path/to/project/bin/mcp"
+    },
+    "stripe": {
+      "command": "stripe-mcp",
+      "env": {
+        "STRIPE_API_KEY": "YOUR_STRIPE_KEY_HERE"
+      }
+    }
+  }
+}

@@ -1,0 +1,4 @@
+acme:
+  name: Acme
+  billing_status: trialing
+  trial_ends_at: <%= 14.days.from_now %>

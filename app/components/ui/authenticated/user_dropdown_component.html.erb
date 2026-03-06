@@ -1,0 +1,27 @@
+<div class="dropdown dropdown-end">
+  <button tabindex="0" class="btn btn-ghost gap-2 hover:bg-base-200">
+    <div class="avatar bg-secondary text-primary-content rounded-lg w-8 h-8 flex items-center justify-center">
+      <span class="text-xl"><%= user_initials %></span>
+    </div>
+    <div class="text-left max-lg:hidden">
+      <p class="text-sm font-medium leading-none"><%= user_full_name %></p>
+      <p class="mt-0.5 text-xs text-base-content/60"><%= user_email %></p>
+    </div>
+    <span class="size-5 text-base-content/60 max-lg:hidden">
+      <%= helpers.heroicon "chevron-down", variant: :mini %>
+    </span>
+  </button>
+  <ul tabindex="0" class="menu dropdown-content rounded-box z-50 mt-3 w-56 bg-base-100 p-2 shadow-lg" data-testid="user-dropdown-menu">
+    <% menu_items.each do |item| %>
+      <li><%= helpers.link_to item[:href] do %>
+        <span class="size-5"><%= helpers.heroicon item[:icon], variant: :mini %></span>
+        <span><%= item[:label] %></span>
+      <% end %></li>
+    <% end %>
+    <div class="divider my-1"></div>
+    <li><%= helpers.link_to sign_out_href, data: { turbo_method: :delete }, class: "text-error" do %>
+      <span class="size-5"><%= helpers.heroicon "arrow-right-on-rectangle", variant: :mini %></span>
+      <span><%= sign_out_label %></span>
+    <% end %></li>
+  </ul>
+</div>

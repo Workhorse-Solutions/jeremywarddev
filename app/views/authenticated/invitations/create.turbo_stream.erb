@@ -1,0 +1,20 @@
+<%= turbo_stream.replace "modal" do %>
+  <%= turbo_frame_tag "modal" %>
+<% end %>
+
+<%= turbo_stream.replace "team-tab-bar" do %>
+  <%= turbo_frame_tag "team-tab-bar" do %>
+    <%= render "authenticated/team/tab_bar",
+        pending_count: @pending_invitations.size,
+        can_manage: current_account_user&.can_manage_members? %>
+  <% end %>
+<% end %>
+
+<%= turbo_stream.replace "pending-invitations" do %>
+  <%= render "authenticated/team/pending_invitations_table",
+      pending_invitations: @pending_invitations %>
+<% end %>
+
+<%= turbo_stream.prepend "flash" do %>
+  <%= render UI::ToastsComponent.new(flash: { "notice" => t(".notice", email: @invitation_form.email) }) %>
+<% end %>

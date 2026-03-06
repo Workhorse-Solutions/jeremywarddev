@@ -1,0 +1,49 @@
+<% content_for :title, t("public.password_resets.edit.title") %>
+
+<%= render UI::SectionComponent.new(
+  outer_class: "min-h-screen flex items-center justify-center px-4",
+  inner_class: "flex items-center justify-center w-full") do %>
+  <%= render UI::CardComponent.new(class_name: "w-full max-w-sm shadow-xl") do %>
+    <h1 class="card-title text-2xl font-bold justify-center mb-2">
+      <%= t("public.password_resets.edit.title") %>
+    </h1>
+
+    <%= form_with url: edit_password_reset_path, method: :patch, class: "space-y-4" do |f| %>
+      <%= hidden_field_tag :token, @token %>
+
+      <%= render Form::ControlComponent.new(
+        form: f,
+        attribute: :password,
+      ) do |field| %>
+        <% field.with_input do %>
+          <%= render Form::InputComponent.new(
+            form: f,
+            attribute: :password,
+            type: :password,
+            input_html: { autocomplete: "new-password", autofocus: true, required: true, minlength: 8 }
+          ) %>
+        <% end %>
+      <% end %>
+
+      <%= render Form::ControlComponent.new(
+        form: f,
+        attribute: :password_confirmation,
+        label: t("public.password_resets.edit.password_confirmation_label"),
+      ) do |field| %>
+        <% field.with_input do %>
+          <%= render Form::InputComponent.new(
+            form: f,
+            attribute: :password_confirmation,
+            type: :password,
+            input_html: { autocomplete: "new-password", required: true, minlength: 8 }
+          ) %>
+        <% end %>
+      <% end %>
+
+      <div class="card-actions">
+        <%= f.submit t("public.password_resets.edit.submit"),
+          class: "btn btn-primary w-full" %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>
