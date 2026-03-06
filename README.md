@@ -78,7 +78,24 @@ When working with an agent, point it at `AGENTS.md` first.
 
 ### Installing AI tooling (skills & hooks)
 
-Agent skills and Claude Code hooks are bundled in the `rails_foundry_cli` gem and installed on demand — they are not committed to your app repo. Run:
+Agent skills and Claude Code hooks are bundled in the `rails_foundry_cli` gem.
+The gem is listed in the Gemfile but gated behind the `FOUNDRY_CLI` environment
+variable so it does not interfere with CI or production installs.
+
+To install the gem and its generators:
+
+```bash
+FOUNDRY_CLI=1 bundle install
+```
+
+> **Private repo auth:** The gem is hosted on a private GitHub repo. Configure
+> Bundler with a personal access token (classic, `repo` scope):
+>
+> ```bash
+> bundle config set --global github.com <YOUR_GITHUB_USERNAME>:<YOUR_PAT>
+> ```
+
+Then generate the AI tooling files:
 
 ```bash
 rails generate rails_foundry_cli:ai_tooling
