@@ -22,12 +22,18 @@ Rails 8 template with Postgres, Tailwind/DaisyUI, and Solid Queue.
 
 ### Alternative: Local Setup
 
-Ensure you have Ruby 3.3.x, Node 20, Yarn, and Postgres installed locally, then run:
+Ensure you have Ruby 3.4.x, Node 20, Yarn, and Postgres installed locally, then run:
 
 ```bash
 bin/setup
 bin/dev
 ```
+
+## CI Setup
+
+The `rails_foundry_cli` gem is hosted in a private GitHub repository. CI needs a token to install it.
+
+Add a secret named `BUNDLE_GITHUB_TOKEN` to your repo's **Settings → Secrets and variables → Actions**. The value should be a GitHub PAT (classic) with `repo` scope, or a fine-grained token with read-only Contents access to `rails-foundry-cli`.
 
 ## Make it yours
 
@@ -59,7 +65,7 @@ bin/dev
 
 ## Stack
 
-* Ruby version: 3.3.x
+* Ruby version: 3.4.x
 * Database: PostgreSQL 16
 * Asset pipeline: Propshaft + Tailwind CSS + DaisyUI
 * Background jobs: Solid Queue
@@ -73,9 +79,51 @@ RailsFoundry is structured to work well with AI agents (Claude Code, GitHub Copi
 - **[CLAUDE.md](CLAUDE.md)** — short pointer file for Claude Code
 - **[docs/ai/STACK.md](docs/ai/STACK.md)** — stack details and key config locations
 - **[docs/ai/WORKFLOWS.md](docs/ai/WORKFLOWS.md)** — verify-first workflow, PR size rules, security-sensitive areas
-- **[.claude/skills/](.claude/skills/README.md)** — reusable, versioned agent task workflows
 
 When working with an agent, point it at `AGENTS.md` first.
+
+Agent skills and Claude Code hooks are not committed to your repo — install them on demand:
+
+```bash
+rails generate rails_foundry_cli:ai_tooling
+```
+
+This copies `.claude/` (skills, hooks, settings) into your project. Re-run after upgrading the gem to pull in updates.
+
+## Generators
+
+The `rails_foundry_cli` gem ships generators for optional content. Run any of them after setup:
+
+### `rails_foundry_cli:ai_tooling`
+
+Installs Claude Code skills, hooks, and settings into `.claude/`.
+
+```bash
+rails generate rails_foundry_cli:ai_tooling
+```
+
+Safe to re-run — prompts before overwriting locally modified files.
+
+### `rails_foundry_cli:landing`
+
+Installs a brand-neutral SaaS landing page: section components, i18n copy, the home view, and component tests.
+
+```bash
+rails generate rails_foundry_cli:landing
+```
+
+Sections included: hero, social proof, problem, solution, features, testimonials, pricing, FAQ, final CTA.
+All copy lives in `config/locales/public/pages/home.en.yml` — edit it to match your product.
+
+### `rails_foundry_cli:demo`
+
+Installs the full demo experience: landing page (via `landing`), a `/pricing` page, and seed data.
+Used automatically by `bin/setup` in the dev repository when `.railsfoundry-dev` is present.
+
+```bash
+rails generate rails_foundry_cli:demo
+bin/rails db:seed
+```
 
 ## MCP Setup
 
