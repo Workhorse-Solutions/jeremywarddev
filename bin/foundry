@@ -13,6 +13,7 @@ Usage: bin/foundry <command>
 Commands:
   setup            Initialise a new app from this template — writes .env from .env.example
   export-secrets   Export Rails credentials to .env.local for MCP server consumption
+  release          Build and publish a release snapshot (run 'bin/foundry release --help' for details)
 
 Run 'bin/foundry setup' to get started.
 EOF
@@ -125,6 +126,7 @@ fi
 case "$1" in
   setup)           cmd_setup ;;
   export-secrets)  cmd_export_secrets ;;
+  release)         shift; exec ruby -r "$ROOT_DIR/lib/foundry/release.rb" -e "Foundry::Release.new(ARGV).run" -- "$@" ;;
   help|--help|-h)  usage; exit 0 ;;
   *)
     echo "Unknown command: $1" >&2

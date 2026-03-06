@@ -29,12 +29,6 @@ bin/setup
 bin/dev
 ```
 
-## CI Setup
-
-The `rails_foundry_cli` gem is hosted in a private GitHub repository. CI needs a token to install it.
-
-Add a secret named `BUNDLE_GITHUB_TOKEN` to your repo's **Settings → Secrets and variables → Actions**. The value should be a GitHub PAT (classic) with `repo` scope, or a fine-grained token with read-only Contents access to `rails-foundry-cli`.
-
 ## Make it yours
 
 When you clone RailsFoundry for a new project, run the setup command to
@@ -82,48 +76,15 @@ RailsFoundry is structured to work well with AI agents (Claude Code, GitHub Copi
 
 When working with an agent, point it at `AGENTS.md` first.
 
-Agent skills and Claude Code hooks are not committed to your repo — install them on demand:
+### Installing AI tooling (skills & hooks)
+
+Agent skills and Claude Code hooks are bundled in the `rails_foundry_cli` gem and installed on demand — they are not committed to your app repo. Run:
 
 ```bash
 rails generate rails_foundry_cli:ai_tooling
 ```
 
-This copies `.claude/` (skills, hooks, settings) into your project. Re-run after upgrading the gem to pull in updates.
-
-## Generators
-
-The `rails_foundry_cli` gem ships generators for optional content. Run any of them after setup:
-
-### `rails_foundry_cli:ai_tooling`
-
-Installs Claude Code skills, hooks, and settings into `.claude/`.
-
-```bash
-rails generate rails_foundry_cli:ai_tooling
-```
-
-Safe to re-run — prompts before overwriting locally modified files.
-
-### `rails_foundry_cli:landing`
-
-Installs a brand-neutral SaaS landing page: section components, i18n copy, the home view, and component tests.
-
-```bash
-rails generate rails_foundry_cli:landing
-```
-
-Sections included: hero, social proof, problem, solution, features, testimonials, pricing, FAQ, final CTA.
-All copy lives in `config/locales/public/pages/home.en.yml` — edit it to match your product.
-
-### `rails_foundry_cli:demo`
-
-Installs the full demo experience: landing page (via `landing`), a `/pricing` page, and seed data.
-Used automatically by `bin/setup` in the dev repository when `.railsfoundry-dev` is present.
-
-```bash
-rails generate rails_foundry_cli:demo
-bin/rails db:seed
-```
+This copies the `.claude/` directory (skills, hooks, settings) into your project. Re-run after upgrading the gem to pull in updated skills.
 
 ## MCP Setup
 
