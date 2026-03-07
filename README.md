@@ -2,43 +2,23 @@
 
 Rails 8 template with Postgres, Tailwind/DaisyUI, and Solid Queue.
 
-## Development Setup
-
-### Recommended: VS Code Dev Containers
-
-1. Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) for VS Code.
-2. Open this repository in VS Code.
-3. When prompted, click **Reopen in Container** (or run the command **Dev Containers: Reopen in Container**).
-4. VS Code will build the Docker image, start the `app` and `db` services, and run `bundle install` / `bin/setup` automatically.
-5. Once the container is ready, open a terminal and run:
-
-   ```bash
-   bin/dev
-   ```
-
-6. Visit [http://localhost:3000](http://localhost:3000).
-
-**Required ports:** `3000` (Rails), `5432` (Postgres)
-
-### Alternative: Local Setup
-
-Ensure you have Ruby 3.4.x, Node 20, Yarn, and Postgres installed locally, then run:
+## Quick Start
 
 ```bash
-bin/setup
-bin/dev
+git clone git@github.com:Workhorse-Solutions/rails-foundry.git my_app
+cd my_app
+git remote rename origin upstream
+git remote add origin git@github.com:YOUR_ORG/my_app.git
+bin/foundry setup          # prompts for APP_NAME and APP_IDENTIFIER
+bundle install
+bin/rails db:create db:migrate
+bin/dev                    # visit http://localhost:3000
 ```
 
-## Make it yours
+This keeps `upstream` pointed at RailsFoundry (for pulling future template
+updates) and sets `origin` to your own repository.
 
-When you clone RailsFoundry for a new project, run the setup command to
-generate a `.env` file with your app's unique identity values:
-
-```bash
-bin/foundry setup
-```
-
-This will prompt you for:
+`bin/foundry setup` writes a `.env` file with your app's unique identity values:
 
 | Variable | Description | Example |
 |---|---|---|
@@ -50,10 +30,28 @@ the Docker Compose project name, and the Kamal service name. Every app cloned
 from this template **must** use a distinct `APP_IDENTIFIER` to prevent
 collisions on the same machine.
 
-After running `bin/foundry setup`:
+### VS Code Dev Containers
+
+1. Install the [Dev Containers extension](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) for VS Code.
+2. Copy `.devcontainer/.env.example` to `.devcontainer/.env` and set your `APP_IDENTIFIER` / `APP_NAME`.
+3. Open this repository in VS Code and click **Reopen in Container** when prompted.
+4. VS Code will build the Docker image, start the `app` and `db` services, and run `bundle install` / `bin/setup` automatically.
+5. Once the container is ready, open a terminal and run:
+
+   ```bash
+   bin/dev
+   ```
+
+6. Visit [http://localhost:3000](http://localhost:3000).
+
+**Required ports:** `3000` (Rails), `5432` (Postgres)
+
+### Local Setup (without Dev Containers)
+
+Ensure you have Ruby 3.4.x, Node 20, Yarn, and Postgres installed locally, then run:
 
 ```bash
-bin/rails db:create db:migrate
+bin/setup
 bin/dev
 ```
 
@@ -82,24 +80,29 @@ Agent skills and Claude Code hooks are bundled in the `rails_foundry_cli` gem.
 The gem is listed in the Gemfile but gated behind the `FOUNDRY_CLI` environment
 variable so it does not interfere with CI or production installs.
 
-To install the gem and its generators:
+> **Important:** `FOUNDRY_CLI` must be set as a **shell environment variable**
+> — Bundler does not read `.env` files. Always prefix the command or `export`
+> the variable in your shell.
 
-```bash
-FOUNDRY_CLI=1 bundle install
-```
+1. **Ensure SSH access** to the private gem repo (one-time setup).
+   You need `read` access to [`Workhorse-Solutions/rails-foundry-cli`](https://github.com/Workhorse-Solutions/rails-foundry-cli)
+   and an SSH key configured with GitHub. Verify with:
 
-> **Private repo auth:** The gem is hosted on a private GitHub repo. Configure
-> Bundler with a personal access token (classic, `repo` scope):
->
-> ```bash
-> bundle config set --global github.com <YOUR_GITHUB_USERNAME>:<YOUR_PAT>
-> ```
+   ```bash
+   ssh -T git@github.com
+   ```
 
-Then generate the AI tooling files:
+2. **Install the gem:**
 
-```bash
-rails generate rails_foundry_cli:ai_tooling
-```
+   ```bash
+   FOUNDRY_CLI=1 bundle install
+   ```
+
+3. **Generate the AI tooling files:**
+
+   ```bash
+   rails generate rails_foundry_cli:ai_tooling
+   ```
 
 This copies the `.claude/` directory (skills, hooks, settings) into your project. Re-run after upgrading the gem to pull in updated skills.
 
@@ -161,7 +164,7 @@ bin/mcp
 #   Transport    : stdio
 ```
 
-Inter `Ctrl-C` to stop — in normal use, your MCP client starts it automatically.
+Enter `Ctrl-C` to stop — in normal use, your MCP client starts it automatically.
 
 ### 6. Restart your agent
 
@@ -205,61 +208,3 @@ See [docs/ai/MCP.md](docs/ai/MCP.md) for the full architecture reference.
 ```bash
 bin/rails test
 ```
-
-## Name Hygiene — Avoiding Collisions When Cloning
-
-RailsFoundry is a template intended to be cloned for multiple apps. Every
-collision-sensitive identifier (Postgres database name, session cookie key,
-Kamal service name, Docker Compose project name) is derived from a single
-environment variable: **`APP_IDENTIFIER`**.
-
-### Variables
-
-| Variable | Purpose | Default |
-|---|---|---|
-| `APP_IDENTIFIER` | snake\_case slug used for DB names, session key, and deploy service name | `railsfoundry` |
-| `APP_NAME` | Human-readable display name | `RailsFoundry` |
-
-### Why it matters
-
-| Collision point | How it is set |
-|---|---|
-| Postgres DB name | `<%= ENV.fetch("APP_IDENTIFIER", "railsfoundry") %>_development` in `database.yml` |
-| Session cookie key | `_#{RailsFoundry.config.app_identifier}_session` in `session_store.rb` |
-| Docker Compose project | `${APP_IDENTIFIER:-railsfoundry}` in `.devcontainer/docker-compose.yml` |
-| Kamal service / image | `<%= ENV.fetch("APP_IDENTIFIER", "railsfoundry") %>` in `deploy.yml` |
-
-Without a unique `APP_IDENTIFIER`, two apps on the same machine will:
-- share or corrupt each other's **session cookies** (same key on `localhost`)
-- target the **same Postgres database** (potentially destroying data)
-
-### Setting up a new app from this template
-
-1. Generate `.env` with your app's unique values using the setup command:
-
-   ```bash
-   bin/foundry setup
-   ```
-
-   Or copy manually and edit:
-
-   ```bash
-   cp .env.example .env
-   ```
-
-   ```dotenv
-   APP_NAME=Workhorse Rental
-   APP_IDENTIFIER=workhorse_rental
-   ```
-
-2. For the devcontainer, copy `.devcontainer/.env.example` to `.devcontainer/.env`
-   and set the same values there before opening the container. Docker Compose
-   reads that file automatically via `${APP_IDENTIFIER:-railsfoundry}` substitution.
-
-   ```bash
-   cp .devcontainer/.env.example .devcontainer/.env
-   # then edit .devcontainer/.env with your APP_IDENTIFIER / APP_NAME
-   ```
-
-3. Run `bin/rails db:create db:migrate` to create fresh databases under the
-   new identifier.
