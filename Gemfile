@@ -72,7 +72,7 @@ group :development do
   # Preview emails in the browser instead of sending them
   gem "letter_opener_web"
 
-  gem "rails_foundry_cli", git: "git@github.com:Workhorse-Solutions/rails-foundry-cli.git", tag: "v0.1.3" if ENV["FOUNDRY_CLI"]
+  gem "rails_foundry_cli", git: "git@github.com:Workhorse-Solutions/rails-foundry-cli.git", tag: "v0.1.4" if ENV["FOUNDRY_CLI"]
 end
 
 group :test do
