@@ -1,0 +1,11 @@
+<%= form_with model: subscriber, url: subscribe_path, id: "email-form", class: "flex flex-col sm:flex-row gap-3 justify-center items-center max-w-md mx-auto" do |f| %>
+  <div class="form-control w-full">
+    <%= f.email_field :email, placeholder: "you@example.com", required: true, class: "input input-bordered w-full #{'input-error' if subscriber.errors[:email].any?}" %>
+    <% if subscriber.errors[:email].any? %>
+      <label class="label">
+        <span class="label-text-alt text-error"><%= subscriber.errors[:email].first %></span>
+      </label>
+    <% end %>
+  </div>
+  <%= f.submit "Subscribe", class: "btn btn-primary whitespace-nowrap" %>
+<% end %>

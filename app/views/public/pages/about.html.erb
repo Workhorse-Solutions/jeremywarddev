@@ -1,0 +1,84 @@
+<section class="py-16">
+  <div class="container mx-auto px-4 max-w-3xl">
+    <h1 class="text-4xl font-bold mb-8">About</h1>
+
+    <div class="prose prose-lg max-w-none">
+      <p class="text-xl text-base-content/80 mb-8">
+        I'm Jeremy Ward — a solo Rails developer based in Idaho Falls, Idaho. I've been shipping code for 20 years, and I'm building a portfolio of SaaS products under
+        <a href="https://workhorsesolutions.llc" target="_blank" rel="noopener" class="link link-primary">Workhorse Solutions</a>.
+      </p>
+
+      <h2 class="text-2xl font-bold mt-12 mb-4">The Short Version</h2>
+      <p>
+        I build software that solves real problems for real businesses. Not theory. Not weekend projects that never launch. Production software with paying customers.
+      </p>
+      <p>
+        My weapon of choice is Ruby on Rails — has been for most of my career. I believe in choosing boring technology, shipping fast, and iterating based on what users actually need.
+      </p>
+
+      <h2 class="text-2xl font-bold mt-12 mb-4">What I'm Working On</h2>
+      <ul class="space-y-4">
+        <li>
+          <strong>RailsFoundry</strong> — A production-ready Rails 8 starter kit. The blueprint I use to launch every new product.
+        </li>
+        <li>
+          <strong>WorkhorseOps</strong> — Trailer rental management software, born from running an actual trailer rental business.
+        </li>
+        <li>
+          <strong>CoverText</strong> — SMS communications platform for independent insurance agencies.
+        </li>
+        <li>
+          <strong>And more...</strong> — Check the <%= link_to "projects page", projects_path, class: "link link-primary" %> for the full portfolio.
+        </li>
+      </ul>
+
+      <h2 class="text-2xl font-bold mt-12 mb-4">The Philosophy</h2>
+      <div class="bg-base-200 p-6 rounded-lg my-6">
+        <ul class="space-y-3">
+          <li><strong>Ship fast, iterate later.</strong> Perfection is the enemy of launched.</li>
+          <li><strong>Choose boring technology.</strong> Rails, Postgres, Linux. They work.</li>
+          <li><strong>Solo doesn't mean small.</strong> One developer can build a real business with the right tools.</li>
+          <li><strong>Build in public.</strong> Share the wins, the losses, and the lessons.</li>
+          <li><strong>Own your audience.</strong> Social media rents you attention. Email gives you ownership.</li>
+        </ul>
+      </div>
+
+      <h2 class="text-2xl font-bold mt-12 mb-4">The Stack</h2>
+      <p>Everything I build runs on the same foundation:</p>
+      <div class="overflow-x-auto">
+        <table class="table table-zebra">
+          <tbody>
+            <tr><td class="font-medium">Backend</td><td>Ruby on Rails 8</td></tr>
+            <tr><td class="font-medium">Frontend</td><td>Hotwire (Turbo + Stimulus)</td></tr>
+            <tr><td class="font-medium">Styling</td><td>Tailwind CSS + DaisyUI</td></tr>
+            <tr><td class="font-medium">Database</td><td>PostgreSQL</td></tr>
+            <tr><td class="font-medium">Background Jobs</td><td>Solid Queue</td></tr>
+            <tr><td class="font-medium">Caching</td><td>Solid Cache</td></tr>
+            <tr><td class="font-medium">Deployment</td><td>Kamal 2</td></tr>
+            <tr><td class="font-medium">JS</td><td>Importmap (no bundler)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h2 class="text-2xl font-bold mt-12 mb-4">Connect</h2>
+      <div class="flex flex-wrap gap-3 not-prose">
+        <a href="https://x.com/jeremywarddev" target="_blank" rel="noopener" class="btn btn-outline btn-sm">X / Twitter</a>
+        <a href="https://www.linkedin.com/in/jrmyward/" target="_blank" rel="noopener" class="btn btn-outline btn-sm">LinkedIn</a>
+        <a href="https://www.youtube.com/@jeremywarddev" target="_blank" rel="noopener" class="btn btn-outline btn-sm">YouTube</a>
+        <a href="https://github.com/Workhorse-Solutions" target="_blank" rel="noopener" class="btn btn-outline btn-sm">GitHub</a>
+      </div>
+
+      <div class="divider mt-12"></div>
+
+      <div class="bg-base-200 p-8 rounded-lg text-center">
+        <h3 class="text-xl font-bold mb-4">Want to follow along?</h3>
+        <p class="text-base-content/70 mb-6">
+          I write about building SaaS products as a solo founder. Real numbers, real lessons, no BS.
+        </p>
+        <div id="email-form-about">
+          <%= render "public/subscribers/form", subscriber: Subscriber.new %>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

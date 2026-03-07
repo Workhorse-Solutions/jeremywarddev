@@ -8,8 +8,6 @@ services:
     volumes:
       - ..:/workspace:cached
     command: sleep infinity
-    ports:
-      - "3000:3000"
     environment:
       DATABASE_URL: postgres://postgres:postgres@db:5432/${APP_IDENTIFIER:-railsfoundry}_development
       TEST_DATABASE_URL: postgres://postgres:postgres@db:5432/${APP_IDENTIFIER:-railsfoundry}_test
@@ -29,7 +27,7 @@ services:
     image: postgres:16
     restart: unless-stopped
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres

@@ -1,60 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en" data-theme="dark">
   <head>
-    <title><%= content_for(:title) || t("public.layout.app_name") %></title>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Covertext">
-    <meta name="mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
-
-    <%= yield :head %>
-
-    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
+    <meta name="author" content="Jeremy Ward">
+    <%= display_meta_tags site: "Jeremy Ward", separator: "—", reverse: true %>
+    <link rel="alternate" type="application/rss+xml" title="Jeremy Ward Dev Blog" href="<%= blog_feed_url(format: :rss) %>">
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
-
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
     <%= stylesheet_link_tag :tailwind, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
+    <%= render "public/shared/analytics" %>
   </head>
 
-  <body>
-    <%= render UI::Public::HeaderComponent.new(
-      brand: { label: t("public.layout.app_name"), href: root_path },
-      nav_items: [
-        { label: t("public.layout.nav.features"), href: root_path(anchor: "features") },
-        { label: t("public.layout.nav.how_it_works"), href: root_path(anchor: "solution") },
-        { label: t("public.layout.nav.pricing"), href: root_path(anchor: "pricing") },
-        { label: t("public.layout.nav.faq"), href: root_path(anchor: "faq") }
-      ],
-      mobile_nav_items: [
-        { label: t("public.layout.nav.home"), href: root_path },
-        { label: t("public.layout.nav.features"), href: root_path(anchor: "features") },
-        { label: t("public.layout.nav.how_it_works"), href: root_path(anchor: "solution") },
-        { label: t("public.layout.nav.pricing"), href: root_path(anchor: "pricing") },
-        { label: t("public.layout.nav.faq"), href: root_path(anchor: "faq") }
-      ],
-      ctas: [
-        { label: t("public.layout.header.get_started"), href: signup_path, css_class: "btn btn-ghost btn-sm" },
-        { label: t("public.layout.header.sign_in"), href: login_path, css_class: "btn btn-primary btn-sm" }
-      ],
-      open_drawer_aria_label: t("public.layout.header.open_sidebar_aria"),
-      close_drawer_aria_label: t("public.layout.header.close_sidebar_aria")
-    ) %>
+  <body class="min-h-screen flex flex-col bg-base-100 text-base-content">
+    <%= render "public/shared/navbar" %>
+
+    <% if notice %>
+      <div class="toast toast-top toast-end z-50">
+        <div class="alert alert-success">
+          <span><%= notice %></span>
+        </div>
+      </div>
+    <% end %>
+
+    <% if alert %>
+      <div class="toast toast-top toast-end z-50">
+        <div class="alert alert-error">
+          <span><%= alert %></span>
+        </div>
+      </div>
+    <% end %>
 
     <main class="flex-1">
-      <%= turbo_frame_tag "flash" do %>
-        <%= render UI::ToastsComponent.new(flash: flash) %>
-      <% end %>
       <%= yield %>
     </main>
 
-    <%= render UI::Public::FooterComponent.new(
-      copyright: t("public.layout.footer.copyright")
-    ) %>
+    <%= render "public/shared/footer" %>
   </body>
 </html>
