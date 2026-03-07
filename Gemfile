@@ -71,12 +71,17 @@ group :development do
   gem "web-console"
   # Preview emails in the browser instead of sending them
   gem "letter_opener_web"
+end
 
-  gem "rails_foundry_cli", git: "git@github.com:Workhorse-Solutions/rails-foundry-cli.git", tag: "v0.1.4" if ENV["FOUNDRY_CLI"]
+group :foundry_cli do
 end
 
 group :test do
   # Use system testing [https://guides.rubyonrails.org/testing.html#system-testing]
   gem "capybara"
   gem "selenium-webdriver"
+end
+
+group :foundry_cli do
+  gem "rails_foundry_cli", git: "git@github.com:Workhorse-Solutions/rails-foundry-cli.git", tag: "cli-v0.1.4"
 end

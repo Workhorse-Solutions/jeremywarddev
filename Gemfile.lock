@@ -1,3 +1,12 @@
+GIT
+  remote: git@github.com:Workhorse-Solutions/rails-foundry-cli.git
+  revision: 2fd3e1005a5f32cd282630f8af42e2d25595e653
+  tag: cli-v0.1.4
+  specs:
+    rails_foundry_cli (0.1.4)
+      railties
+      thor
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -470,6 +479,7 @@ DEPENDENCIES
   puma (>= 5.0)
   rack-attack
   rails (~> 8.1.2)
+  rails_foundry_cli!
   rubocop-rails-omakase
   selenium-webdriver
   solid_cable

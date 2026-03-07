@@ -14,7 +14,8 @@ Commands:
   setup            Initialise a new app from this template — writes .env from .env.example
   export-secrets   Export Rails credentials to .env.local for MCP server consumption
   release          Build and publish a release snapshot (run 'bin/foundry release --help' for details)
-  bump [LEVEL]     Bump version and release (LEVEL: patch (default), minor, major)
+  bump [LEVEL]     Bump template version and release; auto-bumps CLI if it has changes
+  bump-cli [LEVEL] Bump CLI version only (no template release)
 
 Run 'bin/foundry setup' to get started.
 EOF
@@ -76,7 +77,7 @@ cmd_setup() {
   echo "Optional — install AI tooling (skills & hooks):"
   echo "  1. Ensure SSH access to the rails-foundry-cli repo:"
   echo "     ssh -T git@github.com"
-  echo "  2. FOUNDRY_CLI=1 bundle install"
+  echo "  2. bundle install"
   echo "  3. rails generate rails_foundry_cli:ai_tooling"
 }
 
@@ -123,6 +124,77 @@ cmd_export_secrets() {
   echo "  3. Restart Claude Code to activate MCP servers."
 }
 
+# ── Shared version helpers ──────────────────────────────────────────
+
+# Returns the latest tag matching a pattern, or a fallback.
+#   latest_tag "^v[0-9]"       → v0.1.4
+#   latest_tag "^cli-v[0-9]"   → cli-v0.1.0
+latest_tag() {
+  local pattern="$1"
+  git tag --sort=-v:refname | grep -E "$pattern" | head -1 || true
+}
+
+# Parse "v1.2.3" or "cli-v1.2.3" into major/minor/patch globals.
+parse_version() {
+  local tag="$1"
+  # Strip any prefix up to and including the last 'v'
+  local body="${tag##*v}"
+  IFS='.' read -r _v_major _v_minor _v_patch <<< "$body"
+}
+
+# Bump major/minor/patch globals and return the new version string.
+bump_version() {
+  local level="$1" prefix="$2"
+  case "$level" in
+    major) _v_major=$((_v_major + 1)); _v_minor=0; _v_patch=0 ;;
+    minor) _v_minor=$((_v_minor + 1)); _v_patch=0 ;;
+    patch) _v_patch=$((_v_patch + 1)) ;;
+  esac
+  echo "${prefix}${_v_major}.${_v_minor}.${_v_patch}"
+}
+
+# Returns 0 (true) if rails_foundry_cli/ has changes since the given tag.
+cli_has_changes_since() {
+  local since_tag="$1"
+  local cli_dir="$ROOT_DIR/rails_foundry_cli"
+
+  if [[ -z "$since_tag" ]]; then
+    # No previous CLI release — everything is new
+    return 0
+  fi
+
+  # Check dev repo for changes to rails_foundry_cli/ since the tag.
+  # Also check the CLI's own repo for uncommitted or unpushed changes.
+  local dev_changes cli_uncommitted
+
+  # Dev repo: any commits touching rails_foundry_cli/ since the tag?
+  dev_changes=$(git log "${since_tag}..HEAD" --oneline -- rails_foundry_cli/ 2>/dev/null || true)
+
+  # CLI repo: any uncommitted changes?
+  cli_uncommitted=$(git -C "$cli_dir" status --porcelain 2>/dev/null || true)
+
+  if [[ -n "$dev_changes" ]] || [[ -n "$cli_uncommitted" ]]; then
+    return 0
+  fi
+
+  return 1
+}
+
+# Update version.rb to match the new CLI version.
+update_cli_version_rb() {
+  local new_version="$1"
+  local version_file="$ROOT_DIR/rails_foundry_cli/lib/rails_foundry_cli/version.rb"
+
+  # Strip prefix to get bare semver (cli-v0.2.0 → 0.2.0)
+  local bare="${new_version##*v}"
+
+  ruby -i -pe "\$_.gsub!(/VERSION = \"[^\"]*\"/, %(VERSION = \"${bare}\"))" "$version_file"
+
+  echo "  Updated version.rb → ${bare}"
+}
+
+# ── Commands ────────────────────────────────────────────────────────
+
 cmd_bump() {
   local level="patch"
   local extra_args=()
@@ -135,8 +207,8 @@ cmd_bump() {
         cat <<BEOF
 Usage: bin/foundry bump [LEVEL] [RELEASE OPTIONS]
 
-Determines the next version by bumping the latest git tag, tags HEAD,
-and runs the release from that tag (so a dirty working tree won't block you).
+Bumps the template version, detects CLI changes, and releases both.
+The CLI gem is only bumped when it has changes since its last release.
 
   LEVEL    major, minor, or patch (default: patch)
 
@@ -149,8 +221,8 @@ Semver refresher:
   patch  Bug fixes              v1.2.3 → v1.2.4
 
 Examples:
-  bin/foundry bump              # v0.1.2 → v0.1.3
-  bin/foundry bump minor        # v0.1.2 → v0.2.0
+  bin/foundry bump              # template: v0.1.2 → v0.1.3; CLI bumped if changed
+  bin/foundry bump minor        # template: v0.1.2 → v0.2.0
   bin/foundry bump --dry-run    # patch bump, dry run
 BEOF
         exit 0
@@ -159,51 +231,153 @@ BEOF
     esac
   done
 
-  # Find the latest semver tag
-  local latest
-  latest=$(git tag --sort=-v:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -1)
+  # ── Template version ──
+  local latest_tpl
+  latest_tpl=$(latest_tag '^v[0-9]+\.[0-9]+\.[0-9]+$')
+  [[ -z "$latest_tpl" ]] && { echo "No template tags found. Starting from v0.0.0."; latest_tpl="v0.0.0"; }
 
-  if [[ -z "$latest" ]]; then
-    echo "No existing version tags found. Starting from v0.0.0."
-    latest="v0.0.0"
+  parse_version "$latest_tpl"
+  local next_tpl
+  next_tpl=$(bump_version "$level" "v")
+  echo "Template $level bump: $latest_tpl → $next_tpl"
+
+  # ── CLI version ──
+  local latest_cli next_cli cli_bumped=false
+  latest_cli=$(latest_tag '^cli-v[0-9]+\.[0-9]+\.[0-9]+$')
+
+  if cli_has_changes_since "$latest_cli"; then
+    if [[ -z "$latest_cli" ]]; then
+      latest_cli="cli-v0.0.0"
+    fi
+    parse_version "$latest_cli"
+    # CLI always bumps at patch level during a template release
+    next_cli=$(bump_version "patch" "cli-v")
+    cli_bumped=true
+    echo "CLI has changes since $latest_cli → bumping to $next_cli"
+  else
+    next_cli="$latest_cli"
+    echo "CLI unchanged since $latest_cli → reusing"
   fi
 
-  # Parse version components
-  local version_body="${latest#v}"
-  local major minor patch
-  IFS='.' read -r major minor patch <<< "$version_body"
-
-  # Bump the requested level
-  case "$level" in
-    major) major=$((major + 1)); minor=0; patch=0 ;;
-    minor) minor=$((minor + 1)); patch=0 ;;
-    patch) patch=$((patch + 1)) ;;
-  esac
-
-  local next="v${major}.${minor}.${patch}"
-
-  echo "Bumping $level: $latest → $next"
-
-  # Tag HEAD and build from the tag so a dirty working tree doesn't block release
-  echo "Tagging HEAD as $next..."
-  git tag "$next"
   echo ""
 
-  # Clean up the local tag if the release is a dry run or fails
+  # Detect dry-run early — needed to decide whether to mutate version.rb
   local is_dry_run=false
   for a in "${extra_args[@]}"; do
     [[ "$a" == "--dry-run" ]] && is_dry_run=true
   done
 
+  # ── Tag and release ──
+  echo "Tagging HEAD as $next_tpl..."
+  git tag "$next_tpl"
+
+  local trap_tags="$next_tpl"
+
+  if $cli_bumped; then
+    if ! $is_dry_run; then
+      update_cli_version_rb "$next_cli"
+    fi
+    git tag "$next_cli"
+    trap_tags="$next_tpl $next_cli"
+  fi
+
+  echo ""
+
+  # Clean up tags on dry run or failure (use string, not array, for trap portability)
   if $is_dry_run; then
-    trap 'git tag -d "'"$next"'" >/dev/null 2>&1 || true' EXIT
+    trap 'for t in '"$trap_tags"'; do git tag -d "$t" >/dev/null 2>&1 || true; done' EXIT
   else
-    trap 'git tag -d "'"$next"'" >/dev/null 2>&1 || true' ERR
+    trap 'for t in '"$trap_tags"'; do git tag -d "$t" >/dev/null 2>&1 || true; done' ERR
   fi
 
   ruby -r "$ROOT_DIR/lib/foundry/release.rb" \
     -e "Foundry::Release.new(ARGV).run" \
-    -- "$next" --from-tag "$next" "${extra_args[@]}"
+    -- "$next_tpl" --from-tag "$next_tpl" --cli-version "$next_cli" "${extra_args[@]}"
+}
+
+cmd_bump_cli() {
+  local level="patch"
+  local extra_args=()
+
+  for arg in "$@"; do
+    case "$arg" in
+      major|minor|patch) level="$arg" ;;
+      --help|-h)
+        cat <<BEOF
+Usage: bin/foundry bump-cli [LEVEL]
+
+Bumps the CLI gem version and publishes it without releasing the template.
+Use this when you've only changed CLI code and want to ship it independently.
+
+  LEVEL    major, minor, or patch (default: patch)
+
+Options:
+  --dry-run    Show what would happen without publishing
+
+Examples:
+  bin/foundry bump-cli              # cli-v0.1.0 → cli-v0.1.1
+  bin/foundry bump-cli minor        # cli-v0.1.0 → cli-v0.2.0
+  bin/foundry bump-cli --dry-run    # patch bump, dry run
+BEOF
+        exit 0
+        ;;
+      *) extra_args+=("$arg") ;;
+    esac
+  done
+
+  local is_dry_run=false
+  for a in "${extra_args[@]}"; do
+    [[ "$a" == "--dry-run" ]] && is_dry_run=true
+  done
+
+  # Find latest CLI tag
+  local latest_cli
+  latest_cli=$(latest_tag '^cli-v[0-9]+\.[0-9]+\.[0-9]+$')
+  [[ -z "$latest_cli" ]] && { echo "No CLI tags found. Starting from cli-v0.0.0."; latest_cli="cli-v0.0.0"; }
+
+  parse_version "$latest_cli"
+  local next_cli
+  next_cli=$(bump_version "$level" "cli-v")
+  echo "CLI $level bump: $latest_cli → $next_cli"
+
+  # Tag (version.rb is only updated on real runs, not dry runs)
+  echo "Tagging HEAD as $next_cli..."
+  git tag "$next_cli"
+  echo ""
+
+  if $is_dry_run; then
+    trap 'git tag -d "'"$next_cli"'" >/dev/null 2>&1 || true' EXIT
+    echo "── DRY RUN ──"
+    echo "Would publish rails_foundry_cli as $next_cli"
+    echo "Would update version.rb → ${next_cli##*v}"
+    echo "── END DRY RUN ──"
+    return
+  fi
+
+  # Update version.rb (only on real runs)
+  update_cli_version_rb "$next_cli"
+
+  trap 'git tag -d "'"$next_cli"'" >/dev/null 2>&1 || true' ERR
+
+  # Publish gem only (no template release)
+  ruby -r "$ROOT_DIR/lib/foundry/release.rb" -e '
+    dev_repo = File.expand_path("../../..", __FILE__)
+    $LOAD_PATH.unshift(File.join(dev_repo, "rails_foundry_cli", "lib"))
+    require "open3"
+    require "rails_foundry_cli/release/remote_config"
+    require "rails_foundry_cli/release/repo_publisher"
+
+    cli_version = ARGV[0]
+    remotes = RailsFoundryCli::Release::RemoteConfig.new(dev_repo)
+    gem_url = remotes.url_for("gem")
+
+    puts "Publishing gem to #{gem_url}..."
+    gem_source = File.join(dev_repo, "rails_foundry_cli")
+    sha = RailsFoundryCli::Release::RepoPublisher.new(gem_url, snapshot_dir: gem_source).publish(cli_version)
+    puts "  Commit: #{sha}"
+    puts "  Tag:    #{cli_version}"
+    puts "✅ Published CLI #{cli_version}."
+  ' -- "$next_cli"
 }
 
 # ---- main ----
@@ -218,6 +392,7 @@ case "$1" in
   export-secrets)  cmd_export_secrets ;;
   release)         shift; exec ruby -r "$ROOT_DIR/lib/foundry/release.rb" -e "Foundry::Release.new(ARGV).run" -- "$@" ;;
   bump)            shift; cmd_bump "$@" ;;
+  bump-cli)        shift; cmd_bump_cli "$@" ;;
   help|--help|-h)  usage; exit 0 ;;
   *)
     echo "Unknown command: $1" >&2
