@@ -6,23 +6,6 @@ Rails.application.routes.draw do
   scope module: :public do
     get "/pricing", to: "pages#pricing", as: :pricing
 
-    # Blog
-    get "/blog",          to: "blog#index",  as: :blog
-    get "/blog/feed.rss", to: "blog#feed",   as: :blog_feed, defaults: { format: :rss }
-    get "/blog/:slug",    to: "blog#show",   as: :blog_post
-
-    # Projects
-    get "/projects", to: "projects#index", as: :projects
-
-    # About
-    get "/about", to: "pages#about", as: :about
-
-    # Email subscribers
-    post "/subscribe", to: "subscribers#create", as: :subscribe
-
-    # Sitemap
-    get "/sitemap.xml", to: "sitemaps#index", defaults: { format: :xml }
-
     get  "/login",  to: "sessions#new",     as: :login
     post "/login",  to: "sessions#create"
     delete "/logout", to: "sessions#destroy", as: :logout
