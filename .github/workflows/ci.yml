@@ -5,6 +5,9 @@ on:
   push:
     branches: [ main ]
 
+env:
+  BUNDLE_WITHOUT: foundry_cli
+
 jobs:
   scan_ruby:
     runs-on: ubuntu-latest
