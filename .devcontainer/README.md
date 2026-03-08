@@ -2,6 +2,25 @@
 
 This directory configures the VS Code Dev Container for RailsFoundry.
 
+## SSH Access to GitHub
+
+The `postCreateCommand` in `devcontainer.json` runs `ssh-keyscan github.com`
+on container creation so GitHub is automatically trusted. This is required for
+installing the `rails_foundry_cli` gem, which is fetched via SSH.
+
+You also need your **local SSH agent** running with your key loaded:
+
+```sh
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/id_ed25519   # or your key path
+```
+
+VS Code forwards the agent into the container automatically. Verify with:
+
+```sh
+ssh -T git@github.com
+```
+
 ## Claude Code
 
 The [Claude Code](https://www.anthropic.com/claude-code) CLI and VS Code extension are pre-installed in the container.
