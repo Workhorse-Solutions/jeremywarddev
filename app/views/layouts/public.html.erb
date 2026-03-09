@@ -54,7 +54,12 @@
     </main>
 
     <%= render UI::Public::FooterComponent.new(
-      copyright: t("public.layout.footer.copyright")
+      copyright: t("public.layout.footer.copyright"),
+      social_links: [
+        UI::Public::SocialLinksComponent::Link.new(platform: :x, label: "@jeremywarddev", url: "https://x.com/jeremywarddev"),
+        UI::Public::SocialLinksComponent::Link.new(platform: :linkedin, label: "in/jrmyward", url: "https://linkedin.com/in/jrmyward"),
+        UI::Public::SocialLinksComponent::Link.new(platform: :youtube, label: "@jeremywarddev", url: "https://youtube.com/@jeremywarddev")
+      ]
     ) %>
   </body>
 </html>

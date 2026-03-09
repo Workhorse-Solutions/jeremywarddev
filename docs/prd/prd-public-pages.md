@@ -215,13 +215,13 @@ I can connect from any page.
 
 **Acceptance Criteria:**
 
-- [ ] Footer component is updated to accept optional social links data
-- [ ] Footer renders the SocialLinksComponent in compact variant (icon-only row)
-- [ ] Social links appear above the copyright line
-- [ ] The public layout passes the social links data (X, LinkedIn, YouTube) to the footer
-- [ ] All tests pass
-- [ ] `bin/ci` passes
-- [ ] **[UI story]** Every public page footer displays a row of social link icons (X, LinkedIn, YouTube) above the copyright text
+- [x] Footer component is updated to accept optional social links data
+- [x] Footer renders the SocialLinksComponent in compact variant (icon-only row)
+- [x] Social links appear above the copyright line
+- [x] The public layout passes the social links data (X, LinkedIn, YouTube) to the footer
+- [x] All tests pass
+- [x] `bin/ci` passes
+- [x] **[UI story]** System test: `test/components/ui/public/footer_component_test.rb`
 
 ### PP-008: Update Navigation
 

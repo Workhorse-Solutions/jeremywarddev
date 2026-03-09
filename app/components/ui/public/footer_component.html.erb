@@ -1,3 +1,6 @@
 <footer class="footer footer-center p-4 bg-base-200 text-base-content">
+  <% if social_links.any? %>
+    <%= render UI::Public::SocialLinksComponent.new(links: social_links, variant: :compact) %>
+  <% end %>
   <p>&copy; <%= Date.current.year %> <%= copyright %></p>
 </footer>

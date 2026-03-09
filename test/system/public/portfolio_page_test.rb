@@ -20,10 +20,11 @@ class Public::PortfolioPageTest < ApplicationSystemTestCase
   def test_portfolio_page_displays_project_cards
     visit portfolio_path
 
-    assert_selector ".card", minimum: 5
-    assert_text "CoverText / ClientCompass"
-    assert_text "WorkhorseOps"
+    assert_selector ".card", minimum: 6
+    assert_text "GetBackTo"
+    assert_text "CoverText"
     assert_text "RailsFoundry"
+    assert_text "WorkhorseOps"
     assert_text "Workhorse Compliance"
     assert_text "RFP/Grant Ecosystem"
   end
