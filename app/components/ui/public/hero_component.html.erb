@@ -1,0 +1,13 @@
+<section class="<%= section_padding %> bg-base-200">
+  <div class="container text-center">
+    <h1 class="<%= heading_classes %>"><%= title %></h1>
+    <% if subtitle.present? %>
+      <p class="<%= subtitle_classes %>"><%= subtitle %></p>
+    <% end %>
+    <% if show_cta? %>
+      <div class="mt-8">
+        <%= link_to cta_label, cta_href, class: "btn btn-primary btn-lg" %>
+      </div>
+    <% end %>
+  </div>
+</section>
