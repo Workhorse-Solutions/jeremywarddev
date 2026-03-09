@@ -1,0 +1,49 @@
+<% content_for :title, "Posts" %>
+
+<div class="p-6">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-2xl font-bold">Posts</h1>
+    <%= link_to "New Post", new_admin_post_path, class: "btn btn-primary btn-sm" %>
+  </div>
+
+  <div class="overflow-x-auto">
+    <table class="table table-zebra w-full">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Status</th>
+          <th>Published At</th>
+          <th class="text-right">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @posts.each do |post| %>
+          <tr>
+            <td class="font-medium"><%= post.title %></td>
+            <td>
+              <span class="badge <%= post.published? ? 'badge-success' : post.scheduled? ? 'badge-warning' : 'badge-neutral' %> badge-sm">
+                <%= post.status %>
+              </span>
+            </td>
+            <td>
+              <% if post.published_at %>
+                <time datetime="<%= post.published_at.iso8601 %>">
+                  <%= post.published_at.strftime("%b %-d, %Y") %>
+                </time>
+              <% else %>
+                <span class="opacity-40">—</span>
+              <% end %>
+            </td>
+            <td class="text-right">
+              <div class="flex justify-end gap-2">
+                <%= link_to "View", admin_post_path(post), class: "btn btn-ghost btn-xs" %>
+                <%= link_to "Edit", edit_admin_post_path(post), class: "btn btn-ghost btn-xs" %>
+                <%= button_to "Delete", admin_post_path(post), method: :delete, class: "btn btn-ghost btn-xs text-error", data: { turbo_confirm: "Delete this post?" } %>
+              </div>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
