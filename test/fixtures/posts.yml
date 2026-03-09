@@ -1,0 +1,25 @@
+published_post:
+  title: "Hello World"
+  slug: "hello-world"
+  body: "# Hello\n\nThis is the body."
+  body_html: "<h1>Hello</h1>\n<p>This is the body.</p>"
+  status: "published"
+  published_at: <%= 1.day.ago.iso8601 %>
+  metadata: {}
+
+draft_post:
+  title: "Draft Post"
+  slug: "draft-post"
+  body: "Draft content."
+  body_html: "<p>Draft content.</p>"
+  status: "draft"
+  metadata: {}
+
+scheduled_post:
+  title: "Coming Soon"
+  slug: "coming-soon"
+  body: "Future content."
+  body_html: "<p>Future content.</p>"
+  status: "scheduled"
+  published_at: <%= 1.day.from_now.iso8601 %>
+  metadata: {}
