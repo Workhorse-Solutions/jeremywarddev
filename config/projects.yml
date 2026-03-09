@@ -1,0 +1,36 @@
+- name: "CoverText / ClientCompass"
+  description: "Insurance agency communication platform. SMS workflows, compliance tracking, client management. Rebuilt on RailsFoundry."
+  tags:
+    - "Rails 8"
+    - "Hotwire"
+    - "Stripe"
+    - "SMS"
+
+- name: "WorkhorseOps"
+  description: "Trailer rental management SaaS. Born from running a real trailer rental business. Built for operators who need simplicity and reliability."
+  tags:
+    - "Rails 8"
+    - "Multi-tenant"
+    - "Stripe"
+
+- name: "RailsFoundry"
+  description: "Rails 8 SaaS starter kit. The actual foundation used to ship real products. Multi-tenant architecture, Stripe billing, Kamal deployment, AI-native workflows."
+  tags:
+    - "Rails 8"
+    - "Kamal"
+    - "DaisyUI"
+    - "AI"
+
+- name: "Workhorse Compliance"
+  description: "Subcontractor insurance and compliance tracking for general contractors. Solves a painful, expensive problem in construction project management."
+  tags:
+    - "Rails 8"
+    - "Compliance"
+    - "B2B"
+
+- name: "RFP/Grant Ecosystem"
+  description: "RFPNotify, GrantScribe, GrantKit. Underserved markets with clear monetization paths and real customer pain."
+  tags:
+    - "Rails 8"
+    - "AI"
+    - "Document Processing"

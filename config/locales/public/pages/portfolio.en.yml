@@ -3,4 +3,19 @@ en:
     pages:
       portfolio:
         title: "Services & Portfolio"
+        hero_title: "Services & Portfolio"
         view_project: "View Project"
+        services:
+          heading: "Services"
+          intro: "I'm not actively looking for client work — I'm focused on building my own product portfolio. That said, I'm open to interesting projects that align with my expertise and philosophy."
+          capabilities_heading: "What I'm good at:"
+          capability_rails: "Ruby on Rails development (20 years, Rails 8 + Hotwire + Tailwind)"
+          capability_saas: "SaaS architecture and multi-tenant systems"
+          capability_ai: "AI-native development (building with Claude Code, Cursor, coding agents)"
+          capability_strategy: "Solo founder technical strategy (build fast, ship lean, monetize early)"
+          cta: "If you need help: Reach out. I'm selective, but if your project is interesting and the fit is right, let's talk."
+        projects:
+          heading: "Portfolio"
+        philosophy:
+          text_1: "I build tools that work for solo founders, not against them. Minimal dependencies. \"The Rails Way.\" AI-leveraged but not over-engineered."
+          text_2: "Every product I build is designed to generate recurring revenue with minimal ongoing maintenance. The goal isn't to work harder — it's to build leverage so I can work less and live more."

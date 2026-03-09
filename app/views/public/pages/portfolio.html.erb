@@ -1,1 +1,41 @@
 <% content_for :title, t(".title") %>
+
+<%= render UI::Public::HeroComponent.new(
+  title: t(".hero_title"),
+  size: :compact
+) %>
+
+<%= render UI::SectionComponent.new do %>
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-2xl font-bold mb-4"><%= t(".services.heading") %></h2>
+    <p class="mb-4"><%= t(".services.intro") %></p>
+    <p class="font-bold mb-2"><%= t(".services.capabilities_heading") %></p>
+    <ul class="list-disc list-inside mb-4 space-y-1">
+      <li><%= t(".services.capability_rails") %></li>
+      <li><%= t(".services.capability_saas") %></li>
+      <li><%= t(".services.capability_ai") %></li>
+      <li><%= t(".services.capability_strategy") %></li>
+    </ul>
+    <p class="font-bold"><%= t(".services.cta") %></p>
+  </div>
+<% end %>
+
+<%= render UI::SectionComponent.new(bg: :light) do %>
+  <h2 class="text-2xl font-bold mb-8 text-center"><%= t(".projects.heading") %></h2>
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <% @projects.each do |project| %>
+      <%= render UI::Public::ProjectCardComponent.new(
+        name: project["name"],
+        description: project["description"],
+        tags: project["tags"]
+      ) %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= render UI::SectionComponent.new do %>
+  <div class="max-w-2xl mx-auto text-center">
+    <p class="text-lg mb-4"><%= t(".philosophy.text_1") %></p>
+    <p class="text-lg"><%= t(".philosophy.text_2") %></p>
+  </div>
+<% end %>

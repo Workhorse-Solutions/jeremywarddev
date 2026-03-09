@@ -178,18 +178,18 @@ projects so that I can see what he offers and what he has built.
 
 **Acceptance Criteria:**
 
-- [ ] New `portfolio` action added to `Public::PagesController`
-- [ ] Route added: `GET /portfolio` mapped to `pages#portfolio`
-- [ ] Project data is defined as static structured data (YAML file or equivalent)
-- [ ] Page renders HeroComponent in compact size with "Services & Portfolio" title
-- [ ] Page includes a services section with capabilities list and consulting availability blurb (from provided copy)
-- [ ] Page renders a ProjectCardComponent for each project in a responsive grid (1 col mobile, 2 col tablet, 3 col desktop)
-- [ ] Page includes the philosophy blurb below the project grid (from provided copy)
-- [ ] Projects rendered: CoverText/ClientCompass, WorkhorseOps, RailsFoundry, Workhorse Compliance, RFP/Grant Ecosystem
-- [ ] i18n keys follow the `public.pages.portfolio.*` pattern
-- [ ] All tests pass
-- [ ] `bin/ci` passes
-- [ ] **[UI story]** Portfolio page shows a compact hero, a services section with capabilities, a responsive grid of project cards (each with name, description, tags), and a philosophy blurb at the bottom
+- [x] New `portfolio` action added to `Public::PagesController`
+- [x] Route added: `GET /portfolio` mapped to `pages#portfolio`
+- [x] Project data is defined as static structured data (YAML file or equivalent)
+- [x] Page renders HeroComponent in compact size with "Services & Portfolio" title
+- [x] Page includes a services section with capabilities list and consulting availability blurb (from provided copy)
+- [x] Page renders a ProjectCardComponent for each project in a responsive grid (1 col mobile, 2 col tablet, 3 col desktop)
+- [x] Page includes the philosophy blurb below the project grid (from provided copy)
+- [x] Projects rendered: CoverText/ClientCompass, WorkhorseOps, RailsFoundry, Workhorse Compliance, RFP/Grant Ecosystem
+- [x] i18n keys follow the `public.pages.portfolio.*` pattern
+- [x] All tests pass
+- [x] `bin/ci` passes
+- [x] **[UI story]** System test: `test/system/public/portfolio_page_test.rb`
 
 ### PP-006: About Page
 
