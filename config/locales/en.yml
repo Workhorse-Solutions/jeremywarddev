@@ -185,10 +185,8 @@ en:
         close_sidebar_aria: "Close sidebar"
       nav:
         home: "Home"
-        features: "Features"
-        how_it_works: "How It Works"
-        pricing: "Pricing"
-        faq: "FAQ"
+        portfolio: "Portfolio"
+        about: "About"
         dashboard: "Dashboard"
       footer:
         copyright: "RailsFoundry"

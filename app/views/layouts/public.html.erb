@@ -26,17 +26,9 @@
     <%= render UI::Public::HeaderComponent.new(
       brand: { label: t("public.layout.app_name"), href: root_path },
       nav_items: [
-        { label: t("public.layout.nav.features"), href: root_path(anchor: "features") },
-        { label: t("public.layout.nav.how_it_works"), href: root_path(anchor: "solution") },
-        { label: t("public.layout.nav.pricing"), href: root_path(anchor: "pricing") },
-        { label: t("public.layout.nav.faq"), href: root_path(anchor: "faq") }
-      ],
-      mobile_nav_items: [
         { label: t("public.layout.nav.home"), href: root_path },
-        { label: t("public.layout.nav.features"), href: root_path(anchor: "features") },
-        { label: t("public.layout.nav.how_it_works"), href: root_path(anchor: "solution") },
-        { label: t("public.layout.nav.pricing"), href: root_path(anchor: "pricing") },
-        { label: t("public.layout.nav.faq"), href: root_path(anchor: "faq") }
+        { label: t("public.layout.nav.portfolio"), href: portfolio_path },
+        { label: t("public.layout.nav.about"), href: about_path }
       ],
       ctas: [
         { label: t("public.layout.header.get_started"), href: signup_path, css_class: "btn btn-ghost btn-sm" },

@@ -230,14 +230,14 @@ pages so that I can easily find Home, Portfolio, and About.
 
 **Acceptance Criteria:**
 
-- [ ] Public layout header navigation is updated to: Home, Portfolio, About
-- [ ] Mobile drawer navigation matches desktop navigation
-- [ ] Old placeholder nav items (features, how it works, pricing, FAQ) are removed
-- [ ] Named route helpers are used in navigation links
-- [ ] Active state highlights the current page in the nav
-- [ ] All tests pass
-- [ ] `bin/ci` passes
-- [ ] **[UI story]** Desktop and mobile navigation show Home, Portfolio, and About links; the current page link is visually highlighted
+- [x] Public layout header navigation is updated to: Home, Portfolio, About
+- [x] Mobile drawer navigation matches desktop navigation
+- [x] Old placeholder nav items (features, how it works, pricing, FAQ) are removed
+- [x] Named route helpers are used in navigation links
+- [x] Active state highlights the current page in the nav
+- [x] All tests pass
+- [x] `bin/ci` passes
+- [x] **[UI story]** System test: `test/system/public/navigation_test.rb`
 
 ## Functional Requirements
 
