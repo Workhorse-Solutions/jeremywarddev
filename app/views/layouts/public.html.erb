@@ -18,6 +18,8 @@
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
 
+    <%= auto_discovery_link_tag :rss, blog_feed_url(format: :rss), title: "Blog RSS Feed" %>
+
     <%= stylesheet_link_tag :tailwind, "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
@@ -29,14 +31,18 @@
         { label: t("public.layout.nav.features"), href: root_path(anchor: "features") },
         { label: t("public.layout.nav.how_it_works"), href: root_path(anchor: "solution") },
         { label: t("public.layout.nav.pricing"), href: root_path(anchor: "pricing") },
-        { label: t("public.layout.nav.faq"), href: root_path(anchor: "faq") }
+        { label: t("public.layout.nav.faq"), href: root_path(anchor: "faq") },
+        { label: "Blog", href: blog_path },
+        { label: "About", href: about_path }
       ],
       mobile_nav_items: [
         { label: t("public.layout.nav.home"), href: root_path },
         { label: t("public.layout.nav.features"), href: root_path(anchor: "features") },
         { label: t("public.layout.nav.how_it_works"), href: root_path(anchor: "solution") },
         { label: t("public.layout.nav.pricing"), href: root_path(anchor: "pricing") },
-        { label: t("public.layout.nav.faq"), href: root_path(anchor: "faq") }
+        { label: t("public.layout.nav.faq"), href: root_path(anchor: "faq") },
+        { label: "Blog", href: blog_path },
+        { label: "About", href: about_path }
       ],
       ctas: [
         { label: t("public.layout.header.get_started"), href: signup_path, css_class: "btn btn-ghost btn-sm" },

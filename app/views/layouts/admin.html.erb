@@ -26,6 +26,10 @@
 
         <nav class="flex-1 overflow-y-auto py-4">
           <ul class="menu menu-sm px-2">
+            <li><%= link_to admin_posts_path, class: "menu-item #{request.path.start_with?('/admin/posts') ? 'active' : ''}" do %>
+              <span class="size-5"><%= heroicon "document-text", variant: :mini %></span>
+              <span>Posts</span>
+            <% end %></li>
             <li><%= link_to admin_users_path, class: "menu-item #{current_page?(admin_users_path) ? 'active' : ''}" do %>
               <span class="size-5"><%= heroicon "users", variant: :mini %></span>
               <span><%= t("admin.layout.nav.users") %></span>
