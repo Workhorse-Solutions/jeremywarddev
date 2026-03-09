@@ -4,7 +4,14 @@ Rails.application.routes.draw do
   root "public/pages#home"
 
   scope module: :public do
-    get "/pricing", to: "pages#pricing", as: :pricing
+    get "/pricing",  to: "pages#pricing",  as: :pricing
+    get "/about",    to: "pages#about",    as: :about
+    get "/projects", to: "pages#projects", as: :projects
+
+    # Blog
+    get  "/blog",          to: "blog#index", as: :blog
+    get  "/blog/feed.rss", to: "blog#feed",  as: :blog_feed, defaults: { format: :rss }
+    get  "/blog/:slug",    to: "blog#show",  as: :blog_post
 
     get  "/login",  to: "sessions#new",     as: :login
     post "/login",  to: "sessions#create"
@@ -58,6 +65,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :posts
     resources :users, only: :index do
       member do
         post :verify_email
