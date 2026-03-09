@@ -3,7 +3,7 @@ class Admin::UsersController < Admin::BaseController
 
   def index
     users = User.order(created_at: :desc)
-    users = users.where("first_name ILIKE :q OR last_name ILIKE :q OR email ILIKE :q", q: "%#{params[:q]}%") if params[:q].present?
+    users = users.where("first_name LIKE :q OR last_name LIKE :q OR email LIKE :q", q: "%#{params[:q]}%") if params[:q].present?
     @pagy, @users = pagy(:offset, users, limit: 25)
   end
 

@@ -17,7 +17,7 @@
     "ghcr.io/devcontainers/features/node:1": {},
     "ghcr.io/rails/devcontainer/features/activestorage": {},
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": { "moby": false },
-    "ghcr.io/rails/devcontainer/features/postgres-client": {}
+    "ghcr.io/rails/devcontainer/features/sqlite3": {}
   },
 
   // Developer-tool env vars belong here, not in docker-compose
@@ -28,11 +28,10 @@
     "SELENIUM_HOST": "selenium"
   },
 
-  "forwardPorts": [3000, "db:5432"],
+  "forwardPorts": [3000],
 
   "portsAttributes": {
-    "3000": { "label": "Rails", "onAutoForward": "openBrowser" },
-    "5432": { "label": "Postgres", "onAutoForward": "silent" }
+    "3000": { "label": "Rails", "onAutoForward": "openBrowser" }
   },
   "otherPortsAttributes": { "onAutoForward": "ignore" },
 
