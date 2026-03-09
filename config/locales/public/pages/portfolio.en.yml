@@ -1,0 +1,5 @@
+en:
+  public:
+    pages:
+      portfolio:
+        view_project: "View Project"

@@ -147,14 +147,14 @@ learn about Jeremy's work and visit the projects.
 
 **Acceptance Criteria:**
 
-- [ ] Component displays a project name, description, technology tags, and a link to the project
-- [ ] Tags render as DaisyUI badge elements
-- [ ] Card follows the same styling pattern as existing card components
-- [ ] Component follows existing ViewComponent patterns (`app/components/ui/public/`)
-- [ ] Component test covers rendering of all card elements
-- [ ] All tests pass
-- [ ] `bin/ci` passes
-- [ ] **[UI story]** Card displays project name as a heading, description text, badge-styled tags, and a clickable link to the project
+- [x] Component displays a project name, description, technology tags, and a link to the project
+- [x] Tags render as DaisyUI badge elements
+- [x] Card follows the same styling pattern as existing card components
+- [x] Component follows existing ViewComponent patterns (`app/components/ui/public/`)
+- [x] Component test covers rendering of all card elements
+- [x] All tests pass
+- [x] `bin/ci` passes
+- [x] **[UI story]** System test: `test/components/ui/public/project_card_component_test.rb`
 
 ### PP-004: Home Page
 

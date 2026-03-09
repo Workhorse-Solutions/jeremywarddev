@@ -1,0 +1,14 @@
+<%= render UI::CardComponent.new do %>
+  <h3 class="card-title"><%= name %></h3>
+  <p><%= description %></p>
+  <div class="flex flex-wrap gap-2 mt-2">
+    <% tags.each do |tag| %>
+      <%= render UI::BadgeComponent.new(label: tag, color: :ghost) %>
+    <% end %>
+  </div>
+  <% if url.present? %>
+    <div class="card-actions mt-4">
+      <%= link_to t("public.pages.portfolio.view_project"), url, target: "_blank", rel: "noopener noreferrer", class: "btn btn-primary btn-sm" %>
+    </div>
+  <% end %>
+<% end %>
