@@ -5,37 +5,77 @@
   size: :compact
 ) %>
 
-<%= render UI::SectionComponent.new do %>
-  <div class="max-w-3xl mx-auto">
-    <h2 class="text-2xl font-bold mb-4"><%= t(".services.heading") %></h2>
-    <p class="mb-4"><%= t(".services.intro") %></p>
-    <p class="font-bold mb-2"><%= t(".services.capabilities_heading") %></p>
-    <ul class="list-disc list-inside mb-4 space-y-1">
-      <li><%= t(".services.capability_rails") %></li>
-      <li><%= t(".services.capability_saas") %></li>
-      <li><%= t(".services.capability_ai") %></li>
-      <li><%= t(".services.capability_strategy") %></li>
-    </ul>
-    <p class="font-bold"><%= t(".services.cta") %></p>
-  </div>
-<% end %>
+<div data-controller="scroll-reveal">
+  <%# Capabilities %>
+  <section class="py-20 md:py-28">
+    <div class="container">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+        <div class="fade-in-up">
+          <p class="text-xs uppercase tracking-[0.3em] text-primary mb-3" style="font-family: 'JetBrains Mono', monospace;">Services</p>
+          <p class="text-lg text-base-content/70 leading-relaxed">
+            <%= t(".services.intro") %>
+          </p>
+        </div>
+        <div class="fade-in-up stagger-2">
+          <p class="text-xs uppercase tracking-[0.3em] text-primary mb-6" style="font-family: 'JetBrains Mono', monospace;"><%= t(".services.capabilities_heading") %></p>
+          <div class="space-y-4">
+            <div class="flex items-start gap-3">
+              <span class="text-primary mt-1.5 text-xs">&#9656;</span>
+              <p class="text-base-content/80"><%= t(".services.capability_rails") %></p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-primary mt-1.5 text-xs">&#9656;</span>
+              <p class="text-base-content/80"><%= t(".services.capability_saas") %></p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-primary mt-1.5 text-xs">&#9656;</span>
+              <p class="text-base-content/80"><%= t(".services.capability_ai") %></p>
+            </div>
+            <div class="flex items-start gap-3">
+              <span class="text-primary mt-1.5 text-xs">&#9656;</span>
+              <p class="text-base-content/80"><%= t(".services.capability_strategy") %></p>
+            </div>
+          </div>
+          <p class="mt-8 text-sm text-base-content/50" style="font-family: 'JetBrains Mono', monospace;"><%= t(".services.cta") %></p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<%= render UI::SectionComponent.new(bg: :light) do %>
-  <h2 class="text-2xl font-bold mb-8 text-center"><%= t(".projects.heading") %></h2>
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-    <% @projects.each do |project| %>
-      <%= render UI::Public::ProjectCardComponent.new(
-        name: project["name"],
-        description: project["description"],
-        tags: project["tags"]
-      ) %>
-    <% end %>
-  </div>
-<% end %>
+  <%# Projects grid %>
+  <section class="py-20 md:py-28 bg-base-200 border-y border-base-content/5">
+    <div class="container">
+      <div class="mb-12 fade-in-up">
+        <p class="text-xs uppercase tracking-[0.3em] text-primary mb-3" style="font-family: 'JetBrains Mono', monospace;">Portfolio</p>
+        <h2 class="text-3xl md:text-4xl font-bold tracking-tight" style="font-family: 'Instrument Serif', serif;"><%= t(".projects.heading") %></h2>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% @projects.each_with_index do |project, i| %>
+          <div class="fade-in-up stagger-<%= (i % 6) + 1 %>">
+            <%= render UI::Public::ProjectCardComponent.new(
+              name: project["name"],
+              description: project["description"],
+              tags: project["tags"],
+              url: project["url"]
+            ) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
 
-<%= render UI::SectionComponent.new do %>
-  <div class="max-w-2xl mx-auto text-center">
-    <p class="text-lg mb-4"><%= t(".philosophy.text_1") %></p>
-    <p class="text-lg"><%= t(".philosophy.text_2") %></p>
-  </div>
-<% end %>
+  <%# Philosophy %>
+  <section class="py-20 md:py-28">
+    <div class="container">
+      <div class="max-w-3xl fade-in-up">
+        <div class="accent-line mb-8"></div>
+        <p class="text-xl md:text-2xl leading-relaxed text-base-content/80 mb-6" style="font-family: 'Instrument Serif', serif;">
+          <%= t(".philosophy.text_1") %>
+        </p>
+        <p class="text-base text-base-content/60 leading-relaxed">
+          <%= t(".philosophy.text_2") %>
+        </p>
+      </div>
+    </div>
+  </section>
+</div>

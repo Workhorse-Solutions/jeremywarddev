@@ -20,16 +20,4 @@ class UI::Public::HeroComponent < ViewComponent::Base
   def show_cta?
     large? && cta_label.present? && cta_href.present?
   end
-
-  def heading_classes
-    large? ? "text-5xl font-bold" : "text-3xl font-bold"
-  end
-
-  def subtitle_classes
-    large? ? "text-xl opacity-70 mt-4" : "text-lg opacity-70 mt-2"
-  end
-
-  def section_padding
-    large? ? "py-20" : "py-12"
-  end
 end

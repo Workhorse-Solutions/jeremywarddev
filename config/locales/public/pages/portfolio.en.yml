@@ -3,7 +3,7 @@ en:
     pages:
       portfolio:
         title: "Services & Portfolio"
-        hero_title: "Services & Portfolio"
+        hero_title: "Portfolio"
         view_project: "View Project"
         services:
           heading: "Services"

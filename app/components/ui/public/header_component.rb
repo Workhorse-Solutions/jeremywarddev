@@ -16,6 +16,6 @@ class UI::Public::HeaderComponent < ViewComponent::Base
               :open_drawer_aria_label, :close_drawer_aria_label
 
   def brand_link
-    helpers.link_to brand[:label], brand[:href], class: "text-xl font-bold text-primary"
+    helpers.link_to brand[:label], brand[:href], class: "text-xl font-bold text-base-content tracking-tight", style: "font-family: 'JetBrains Mono', monospace;"
   end
 end

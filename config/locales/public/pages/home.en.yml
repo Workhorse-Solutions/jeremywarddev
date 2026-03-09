@@ -3,7 +3,8 @@ en:
     pages:
       home:
         title: "Jeremy Ward — Rails Developer & SaaS Builder"
-        heading: "Jeremy Ward"
-        subtitle: "Building profitable SaaS products with Rails + AI"
-        cta: "View Services & Portfolio"
-        intro: "I'm a Rails developer with 20 years of experience, building a portfolio of software products that generate recurring revenue. Follow along as I ship real products, share technical decisions, and document the journey."
+        heading: "Building SaaS with Rails + AI."
+        subtitle: "Solo founder / 20 years of Rails"
+        cta: "See the portfolio"
+        intro: "I'm a Rails developer with 20 years of experience, building a portfolio of micro SaaS products that generate recurring revenue. I ship real products, share technical decisions, and document the journey — no fluff, no hype."
+        philosophy: "Build products that fund the life you want to live. Minimal dependencies. The Rails Way. AI-leveraged but not over-engineered."

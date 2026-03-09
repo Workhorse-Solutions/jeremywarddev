@@ -1,13 +1,43 @@
-<section class="<%= section_padding %> bg-base-200">
-  <div class="container text-center">
-    <h1 class="<%= heading_classes %>"><%= title %></h1>
-    <% if subtitle.present? %>
-      <p class="<%= subtitle_classes %>"><%= subtitle %></p>
-    <% end %>
-    <% if show_cta? %>
-      <div class="mt-8">
-        <%= link_to cta_label, cta_href, class: "btn btn-primary btn-lg" %>
+<% if large? %>
+  <section class="relative overflow-hidden py-28 md:py-36 lg:py-44">
+    <%# Subtle grid pattern background %>
+    <div class="absolute inset-0 opacity-[0.03]" style="background-image: linear-gradient(oklch(92% 0.01 80) 1px, transparent 1px), linear-gradient(90deg, oklch(92% 0.01 80) 1px, transparent 1px); background-size: 4rem 4rem;"></div>
+    <%# Amber glow %>
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[40rem] h-[40rem] rounded-full opacity-[0.04]" style="background: radial-gradient(circle, oklch(78% 0.155 75), transparent 70%);"></div>
+
+    <div class="container relative">
+      <div class="max-w-4xl">
+        <p class="text-xs uppercase tracking-[0.3em] text-primary mb-6 opacity-0 animate-[fadeInUp_0.6s_0.1s_forwards]" style="font-family: 'JetBrains Mono', monospace;">
+          <%= subtitle %>
+        </p>
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold leading-[0.95] tracking-tight mb-8 opacity-0 animate-[fadeInUp_0.6s_0.2s_forwards]" style="font-family: 'Instrument Serif', serif;">
+          <%= title %>
+        </h1>
+        <% if show_cta? %>
+          <div class="opacity-0 animate-[fadeInUp_0.6s_0.4s_forwards]">
+            <%= link_to cta_href, class: "group inline-flex items-center gap-3 text-primary hover:text-base-content transition-colors" do %>
+              <span class="text-sm uppercase tracking-widest font-medium" style="font-family: 'JetBrains Mono', monospace;"><%= cta_label %></span>
+              <svg class="w-5 h-5 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+            <% end %>
+          </div>
+        <% end %>
       </div>
-    <% end %>
-  </div>
-</section>
+    </div>
+
+    <style>
+      @keyframes fadeInUp {
+        from { opacity: 0; transform: translateY(1.5rem); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+    </style>
+  </section>
+<% else %>
+  <section class="py-16 md:py-20 border-b border-base-content/5">
+    <div class="container">
+      <div class="max-w-3xl">
+        <div class="accent-line mb-6"></div>
+        <h1 class="text-4xl md:text-5xl font-bold tracking-tight" style="font-family: 'Instrument Serif', serif;"><%= title %></h1>
+      </div>
+    </div>
+  </section>
+<% end %>

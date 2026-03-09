@@ -4,9 +4,9 @@ class Public::HomePageTest < ApplicationSystemTestCase
   def test_home_page_displays_hero_with_heading_and_cta
     visit root_path
 
-    assert_selector "h1", text: "Jeremy Ward"
-    assert_selector "p", text: /Rails \+ AI/
-    assert_selector "a.btn.btn-primary", text: "View Services & Portfolio"
+    assert_selector "h1", text: "Building SaaS with Rails + AI."
+    assert_selector "p", text: /Solo founder/
+    assert_link "See the portfolio", href: portfolio_path
   end
 
   def test_home_page_displays_intro_section
@@ -18,6 +18,6 @@ class Public::HomePageTest < ApplicationSystemTestCase
   def test_home_page_cta_links_to_portfolio
     visit root_path
 
-    assert_selector "a[href='#{portfolio_path}']", text: "View Services & Portfolio"
+    assert_selector "a[href='#{portfolio_path}']", text: "See the portfolio"
   end
 end

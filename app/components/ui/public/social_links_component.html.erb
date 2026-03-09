@@ -1,8 +1,8 @@
 <% if full? %>
-  <ul class="space-y-2">
+  <ul class="space-y-3">
     <% links.each do |link| %>
       <li>
-        <%= link_to link.url, target: "_blank", rel: "noopener noreferrer", class: "inline-flex items-center gap-2 link link-hover" do %>
+        <%= link_to link.url, target: "_blank", rel: "noopener noreferrer", class: "inline-flex items-center gap-3 text-base-content/60 hover:text-primary transition-colors text-sm" do %>
           <%= icon_for(link.platform).html_safe %>
           <span><%= link.label %></span>
         <% end %>
@@ -10,9 +10,9 @@
     <% end %>
   </ul>
 <% else %>
-  <div class="flex items-center gap-4">
+  <div class="flex items-center gap-5">
     <% links.each do |link| %>
-      <%= link_to link.url, target: "_blank", rel: "noopener noreferrer", class: "link link-hover", aria: { label: link.label } do %>
+      <%= link_to link.url, target: "_blank", rel: "noopener noreferrer", class: "text-base-content/40 hover:text-primary transition-colors", aria: { label: link.label } do %>
         <%= icon_for(link.platform).html_safe %>
       <% end %>
     <% end %>

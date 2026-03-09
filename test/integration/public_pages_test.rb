@@ -6,9 +6,9 @@ class PublicPagesTest < ActionDispatch::IntegrationTest
     assert_response :ok
   end
 
-  test "homepage renders placeholder with signup link" do
+  test "homepage renders hero and portfolio link" do
     get root_path
     assert_response :ok
-    assert_includes response.body, signup_path
+    assert_includes response.body, portfolio_path
   end
 end

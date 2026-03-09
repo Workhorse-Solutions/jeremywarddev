@@ -1,6 +1,30 @@
-<footer class="footer footer-center p-4 bg-base-200 text-base-content">
-  <% if social_links.any? %>
-    <%= render UI::Public::SocialLinksComponent.new(links: social_links, variant: :compact) %>
-  <% end %>
-  <p>&copy; <%= Date.current.year %> <%= copyright %></p>
+<footer class="border-t border-base-content/5 bg-base-200 py-16">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
+      <div>
+        <p class="text-lg font-semibold mb-2" style="font-family: 'JetBrains Mono', monospace;">jeremyward.dev</p>
+        <p class="text-base-content/60 text-sm leading-relaxed">
+          Solo founder. 20 years of Rails.<br>
+          Building SaaS products with AI.
+        </p>
+      </div>
+      <div>
+        <p class="text-xs uppercase tracking-widest text-primary mb-4" style="font-family: 'JetBrains Mono', monospace;">Connect</p>
+        <% if social_links.any? %>
+          <%= render UI::Public::SocialLinksComponent.new(links: social_links, variant: :full) %>
+        <% end %>
+      </div>
+      <div>
+        <p class="text-xs uppercase tracking-widest text-primary mb-4" style="font-family: 'JetBrains Mono', monospace;">Currently Building</p>
+        <p class="text-base-content/60 text-sm leading-relaxed">
+          Shipping micro SaaS products on Rails 8.<br>
+          Powered by RailsFoundry + Claude Code.
+        </p>
+      </div>
+    </div>
+    <div class="border-t border-base-content/5 pt-6 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p class="text-base-content/40 text-xs" style="font-family: 'JetBrains Mono', monospace;">&copy; <%= Date.current.year %> <%= copyright %></p>
+      <p class="text-base-content/40 text-xs" style="font-family: 'JetBrains Mono', monospace;">Idaho Falls, ID</p>
+    </div>
+  </div>
 </footer>

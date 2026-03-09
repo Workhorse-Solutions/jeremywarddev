@@ -177,9 +177,8 @@ en:
       signup_to_accept: "Please sign up to accept the invitation."
       accepted: "You have joined the team!"
     layout:
-      app_name: "RailsFoundry"
+      app_name: "jeremyward.dev"
       header:
-        get_started: "Get Started"
         sign_in: "Sign In"
         open_sidebar_aria: "Open sidebar"
         close_sidebar_aria: "Close sidebar"
@@ -189,4 +188,4 @@ en:
         about: "About"
         dashboard: "Dashboard"
       footer:
-        copyright: "RailsFoundry"
+        copyright: "Jeremy Ward"

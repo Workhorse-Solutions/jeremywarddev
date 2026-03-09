@@ -8,8 +8,82 @@
   cta_href: portfolio_path
 ) %>
 
-<%= render UI::SectionComponent.new do %>
-  <div class="max-w-2xl mx-auto text-center">
-    <p class="text-lg leading-relaxed"><%= t(".intro") %></p>
-  </div>
-<% end %>
+<div data-controller="scroll-reveal">
+  <%# Stats bar %>
+  <section class="border-b border-base-content/5 py-12">
+    <div class="container">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="fade-in-up stagger-1">
+          <p class="text-3xl md:text-4xl font-bold text-primary" style="font-family: 'Instrument Serif', serif;">20+</p>
+          <p class="text-xs uppercase tracking-widest text-base-content/50 mt-1" style="font-family: 'JetBrains Mono', monospace;">Years Rails</p>
+        </div>
+        <div class="fade-in-up stagger-2">
+          <p class="text-3xl md:text-4xl font-bold text-primary" style="font-family: 'Instrument Serif', serif;">6</p>
+          <p class="text-xs uppercase tracking-widest text-base-content/50 mt-1" style="font-family: 'JetBrains Mono', monospace;">Active Products</p>
+        </div>
+        <div class="fade-in-up stagger-3">
+          <p class="text-3xl md:text-4xl font-bold text-primary" style="font-family: 'Instrument Serif', serif;">$17</p>
+          <p class="text-xs uppercase tracking-widest text-base-content/50 mt-1" style="font-family: 'JetBrains Mono', monospace;">/mo Hosting</p>
+        </div>
+        <div class="fade-in-up stagger-4">
+          <p class="text-3xl md:text-4xl font-bold text-primary" style="font-family: 'Instrument Serif', serif;">1</p>
+          <p class="text-xs uppercase tracking-widest text-base-content/50 mt-1" style="font-family: 'JetBrains Mono', monospace;">Person Team</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <%# Intro %>
+  <section class="py-20 md:py-28">
+    <div class="container">
+      <div class="max-w-3xl fade-in-up">
+        <div class="accent-line mb-8"></div>
+        <p class="text-xl md:text-2xl leading-relaxed text-base-content/80">
+          <%= t(".intro") %>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <%# Featured projects preview %>
+  <section class="py-20 md:py-28 bg-base-200 border-y border-base-content/5">
+    <div class="container">
+      <div class="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
+        <div class="fade-in-up">
+          <p class="text-xs uppercase tracking-[0.3em] text-primary mb-3" style="font-family: 'JetBrains Mono', monospace;">What I'm building</p>
+          <h2 class="text-3xl md:text-4xl font-bold tracking-tight" style="font-family: 'Instrument Serif', serif;">Active Projects</h2>
+        </div>
+        <div class="fade-in-up mt-4 md:mt-0">
+          <%= link_to portfolio_path, class: "group inline-flex items-center gap-2 text-primary hover:text-base-content transition-colors text-sm" do %>
+            <span style="font-family: 'JetBrains Mono', monospace;">View all</span>
+            <svg class="w-4 h-4 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+          <% end %>
+        </div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% @projects.first(3).each_with_index do |project, i| %>
+          <div class="fade-in-up stagger-<%= i + 1 %>">
+            <%= render UI::Public::ProjectCardComponent.new(
+              name: project["name"],
+              description: project["description"],
+              tags: project["tags"],
+              url: project["url"]
+            ) %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </section>
+
+  <%# Philosophy / CTA %>
+  <section class="py-20 md:py-28">
+    <div class="container">
+      <div class="max-w-3xl mx-auto text-center fade-in-up">
+        <p class="text-xl md:text-2xl leading-relaxed text-base-content/80" style="font-family: 'Instrument Serif', serif; font-size: 1.75rem;">
+          "<%= t(".philosophy") %>"
+        </p>
+        <div class="accent-line mx-auto mt-8"></div>
+      </div>
+    </div>
+  </section>
+</div>

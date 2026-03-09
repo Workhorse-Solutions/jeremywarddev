@@ -1,14 +1,16 @@
-<%= render UI::CardComponent.new do %>
-  <h3 class="card-title"><%= name %></h3>
-  <p><%= description %></p>
-  <div class="flex flex-wrap gap-2 mt-2">
-    <% tags.each do |tag| %>
-      <%= render UI::BadgeComponent.new(label: tag, color: :ghost) %>
+<div class="group relative border border-base-content/10 bg-base-100 p-6 hover:border-primary/40 transition-all duration-300 hover:-translate-y-1" style="border-radius: 0.375rem;">
+  <div class="flex items-start justify-between mb-3">
+    <h3 class="text-lg font-semibold tracking-tight" style="font-family: 'Instrument Serif', serif; font-size: 1.35rem;"><%= name %></h3>
+    <% if url.present? %>
+      <%= link_to url, target: "_blank", rel: "noopener noreferrer", class: "text-base-content/30 group-hover:text-primary transition-colors" do %>
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" /></svg>
+      <% end %>
     <% end %>
   </div>
-  <% if url.present? %>
-    <div class="card-actions mt-4">
-      <%= link_to t("public.pages.portfolio.view_project"), url, target: "_blank", rel: "noopener noreferrer", class: "btn btn-primary btn-sm" %>
-    </div>
-  <% end %>
-<% end %>
+  <p class="text-sm text-base-content/60 leading-relaxed mb-4"><%= description %></p>
+  <div class="flex flex-wrap gap-2">
+    <% tags.each do |tag| %>
+      <span class="text-[0.65rem] uppercase tracking-widest text-base-content/40 border border-base-content/10 px-2 py-0.5" style="font-family: 'JetBrains Mono', monospace; border-radius: 0.2rem;"><%= tag %></span>
+    <% end %>
+  </div>
+</div>
