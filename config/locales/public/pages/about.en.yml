@@ -3,3 +3,19 @@ en:
     pages:
       about:
         title: "About"
+        hero_title: "About"
+        bio:
+          intro: "I'm Jeremy Ward — a Rails developer with 20 years of experience building real software for real businesses."
+          mission: "I'm not here to sell you courses or teach you the fundamentals. I'm here to build profitable SaaS products that generate revenue and fund the life I want to live."
+          difference_heading: "What makes me different:"
+          difference: "Most developer content creators are teaching. I'm shipping. CoverText, ClientCompass, WorkhorseOps, RailsFoundry — these aren't side projects or demos. They're actual businesses solving real problems for paying customers."
+          build_in_public: "I build in public because it creates accountability, proves the tools work, and helps other solo founders see what's possible when you combine deep Rails experience with modern AI tooling."
+          background_heading: "My background:"
+          background: "B.S. in Athletic Training and Strength & Conditioning. Built Fitrme back in 2012 (Rails + Ionic native apps for customized workout guidance). Spent years in the trenches shipping production Rails apps. Now building a portfolio of software products to replace W2 income."
+          philosophy_heading: "The philosophy:"
+          philosophy: "Build products that fund the life you want to live. For me, that's time on the golf course (I coach high school golf), archery elk hunting in the backcountry, and outdoor adventure. Your version might look different — but the principle is the same."
+          sustainable: "I'm not chasing unicorn exits or VC funding. I'm building sustainable, profitable software businesses that run with minimal overhead so I can spend time doing what I love."
+          content_heading: "What you'll find here:"
+          content: "Weekly updates on what I'm building. Technical deep dives into architecture decisions. Revenue transparency. Real problems and real solutions. No fluff, no hype — just honest documentation of building a software portfolio as a solo founder."
+        social:
+          heading: "Connect"

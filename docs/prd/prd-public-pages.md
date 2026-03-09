@@ -198,15 +198,15 @@ his background and can connect with him on social platforms.
 
 **Acceptance Criteria:**
 
-- [ ] New `about` action added to `Public::PagesController`
-- [ ] Route added: `GET /about` mapped to `pages#about`
-- [ ] Page renders HeroComponent in compact size with "About" title
-- [ ] Page includes the full bio content from the provided About copy (multiple sections with bold subheadings)
-- [ ] Page renders the SocialLinksComponent in full variant with links to X (@jeremywarddev), LinkedIn (in/jrmyward), and YouTube (@jeremywarddev)
-- [ ] i18n keys follow the `public.pages.about.*` pattern
-- [ ] All tests pass
-- [ ] `bin/ci` passes
-- [ ] **[UI story]** About page shows a compact hero, multi-section bio content with bold subheadings, and a social links section displaying platform names and icons as clickable links
+- [x] New `about` action added to `Public::PagesController`
+- [x] Route added: `GET /about` mapped to `pages#about`
+- [x] Page renders HeroComponent in compact size with "About" title
+- [x] Page includes the full bio content from the provided About copy (multiple sections with bold subheadings)
+- [x] Page renders the SocialLinksComponent in full variant with links to X (@jeremywarddev), LinkedIn (in/jrmyward), and YouTube (@jeremywarddev)
+- [x] i18n keys follow the `public.pages.about.*` pattern
+- [x] All tests pass
+- [x] `bin/ci` passes
+- [x] **[UI story]** System test: `test/system/public/about_page_test.rb`
 
 ### PP-007: Update Footer with Social Links
 

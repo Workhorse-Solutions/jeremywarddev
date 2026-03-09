@@ -1,1 +1,39 @@
 <% content_for :title, t(".title") %>
+
+<%= render UI::Public::HeroComponent.new(
+  title: t(".hero_title"),
+  size: :compact
+) %>
+
+<%= render UI::SectionComponent.new do %>
+  <div class="max-w-3xl mx-auto prose">
+    <p><%= t(".bio.intro") %></p>
+    <p><%= t(".bio.mission") %></p>
+
+    <p><strong><%= t(".bio.difference_heading") %></strong> <%= t(".bio.difference") %></p>
+
+    <p><%= t(".bio.build_in_public") %></p>
+
+    <p><strong><%= t(".bio.background_heading") %></strong> <%= t(".bio.background") %></p>
+
+    <p><strong><%= t(".bio.philosophy_heading") %></strong> <%= t(".bio.philosophy") %></p>
+
+    <p><%= t(".bio.sustainable") %></p>
+
+    <p><strong><%= t(".bio.content_heading") %></strong> <%= t(".bio.content") %></p>
+  </div>
+<% end %>
+
+<%= render UI::SectionComponent.new(bg: :light) do %>
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-2xl font-bold mb-4"><%= t(".social.heading") %></h2>
+    <%= render UI::Public::SocialLinksComponent.new(
+      links: [
+        UI::Public::SocialLinksComponent::Link.new(platform: :x, label: "@jeremywarddev", url: "https://x.com/jeremywarddev"),
+        UI::Public::SocialLinksComponent::Link.new(platform: :linkedin, label: "in/jrmyward", url: "https://linkedin.com/in/jrmyward"),
+        UI::Public::SocialLinksComponent::Link.new(platform: :youtube, label: "@jeremywarddev", url: "https://youtube.com/@jeremywarddev")
+      ],
+      variant: :full
+    ) %>
+  </div>
+<% end %>
