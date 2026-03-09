@@ -4,4 +4,10 @@ class Public::PagesController < Public::BaseController
 
   def pricing
   end
+
+  def about
+  end
+
+  def projects
+  end
 end
