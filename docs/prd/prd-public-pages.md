@@ -130,15 +130,15 @@ can follow his work across platforms.
 
 **Acceptance Criteria:**
 
-- [ ] Component renders a full variant showing platform name/label alongside an icon
-- [ ] Component renders a compact variant showing icon-only links in a horizontal row
-- [ ] Each link opens in a new tab with appropriate security attributes
-- [ ] Component supports X (Twitter), LinkedIn, and YouTube platforms
-- [ ] Component follows existing ViewComponent patterns (`app/components/ui/public/`)
-- [ ] Component test covers both variants and link attributes
-- [ ] All tests pass
-- [ ] `bin/ci` passes
-- [ ] **[UI story]** Full variant displays platform names with icons as a list; compact variant displays a horizontal row of icon-only links
+- [x] Component renders a full variant showing platform name/label alongside an icon
+- [x] Component renders a compact variant showing icon-only links in a horizontal row
+- [x] Each link opens in a new tab with appropriate security attributes
+- [x] Component supports X (Twitter), LinkedIn, and YouTube platforms
+- [x] Component follows existing ViewComponent patterns (`app/components/ui/public/`)
+- [x] Component test covers both variants and link attributes
+- [x] All tests pass
+- [x] `bin/ci` passes
+- [x] **[UI story]** System test: `test/components/ui/public/social_links_component_test.rb`
 
 ### PP-003: Project Card Component
 
