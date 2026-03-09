@@ -28,7 +28,7 @@
     "SELENIUM_HOST": "selenium"
   },
 
-  "forwardPorts": [3000, 5432],
+  "forwardPorts": [3000, "db:5432"],
 
   "portsAttributes": {
     "3000": { "label": "Rails", "onAutoForward": "openBrowser" },
