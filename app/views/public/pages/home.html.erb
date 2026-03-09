@@ -1,9 +1,15 @@
 <% content_for :title, t(".title") %>
 
-<div class="min-h-screen flex items-center justify-center">
-  <div class="text-center max-w-lg px-4">
-    <h1 class="text-4xl font-bold mb-4"><%= t(".heading") %></h1>
-    <p class="text-lg mb-8 opacity-70"><%= t(".description") %></p>
-    <%= link_to t(".cta"), signup_path, class: "btn btn-primary btn-lg" %>
+<%= render UI::Public::HeroComponent.new(
+  title: t(".heading"),
+  subtitle: t(".subtitle"),
+  size: :large,
+  cta_label: t(".cta"),
+  cta_href: portfolio_path
+) %>
+
+<%= render UI::SectionComponent.new do %>
+  <div class="max-w-2xl mx-auto text-center">
+    <p class="text-lg leading-relaxed"><%= t(".intro") %></p>
   </div>
-</div>
+<% end %>

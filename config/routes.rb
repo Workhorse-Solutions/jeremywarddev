@@ -5,6 +5,8 @@ Rails.application.routes.draw do
 
   scope module: :public do
     get "/pricing", to: "pages#pricing", as: :pricing
+    get "/portfolio", to: "pages#portfolio", as: :portfolio
+    get "/about", to: "pages#about", as: :about
 
     get  "/login",  to: "sessions#new",     as: :login
     post "/login",  to: "sessions#create"

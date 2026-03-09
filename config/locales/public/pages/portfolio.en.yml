@@ -2,4 +2,5 @@ en:
   public:
     pages:
       portfolio:
+        title: "Services & Portfolio"
         view_project: "View Project"

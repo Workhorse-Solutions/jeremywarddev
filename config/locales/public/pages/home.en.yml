@@ -2,7 +2,8 @@ en:
   public:
     pages:
       home:
-        title: "Welcome"
-        heading: "Your app starts here"
-        description: "Replace this placeholder with your landing page content."
-        cta: "Get started"
+        title: "Jeremy Ward — Rails Developer & SaaS Builder"
+        heading: "Jeremy Ward"
+        subtitle: "Building profitable SaaS products with Rails + AI"
+        cta: "View Services & Portfolio"
+        intro: "I'm a Rails developer with 20 years of experience, building a portfolio of software products that generate recurring revenue. Follow along as I ship real products, share technical decisions, and document the journey."

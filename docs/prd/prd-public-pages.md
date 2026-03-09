@@ -163,13 +163,13 @@ understand who Jeremy Ward is and what he builds.
 
 **Acceptance Criteria:**
 
-- [ ] Home page renders the HeroComponent in large size with heading "Jeremy Ward", subtitle about building SaaS with Rails + AI, and a CTA linking to the Services & Portfolio page
-- [ ] Page includes a brief intro section below the hero
-- [ ] Existing `root_path` route continues to serve the home page
-- [ ] i18n keys follow the `public.pages.home.*` pattern
-- [ ] All tests pass
-- [ ] `bin/ci` passes
-- [ ] **[UI story]** Home page displays the large hero with heading, subtitle, and CTA button linking to Services & Portfolio; an intro section appears below the hero
+- [x] Home page renders the HeroComponent in large size with heading "Jeremy Ward", subtitle about building SaaS with Rails + AI, and a CTA linking to the Services & Portfolio page
+- [x] Page includes a brief intro section below the hero
+- [x] Existing `root_path` route continues to serve the home page
+- [x] i18n keys follow the `public.pages.home.*` pattern
+- [x] All tests pass
+- [x] `bin/ci` passes
+- [x] **[UI story]** System test: `test/system/public/home_page_test.rb`
 
 ### PP-005: Services & Portfolio Page
 
