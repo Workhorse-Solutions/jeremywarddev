@@ -1,5 +1,5 @@
 class Admin::ContentController < Admin::BaseController
-  before_action :set_content, only: [:show, :edit, :update, :approve, :reject, :destroy]
+  before_action :set_content, only: %i[show edit update approve reject destroy]
 
   def index
     @pending = Current.account.agent_contents.pending_approval.recent

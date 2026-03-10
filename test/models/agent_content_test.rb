@@ -144,10 +144,10 @@ class AgentContentTest < ActiveSupport::TestCase
   # --- Metadata ---
 
   test "metadata stores and retrieves JSON data" do
-    content = build_content(metadata: {"word_count" => 500, "seo_keywords" => ["rails", "ai"]})
+    content = build_content(metadata: { "word_count" => 500, "seo_keywords" => %w[rails ai] })
     content.save!
     content.reload
     assert_equal 500, content.metadata["word_count"]
-    assert_equal ["rails", "ai"], content.metadata["seo_keywords"]
+    assert_equal %w[rails ai], content.metadata["seo_keywords"]
   end
 end

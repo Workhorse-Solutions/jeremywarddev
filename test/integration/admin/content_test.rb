@@ -79,7 +79,7 @@ class Admin::ContentTest < ActionDispatch::IntegrationTest
     post approve_admin_content_path(@pending)
     assert_redirected_to admin_content_index_path
     @pending.reload
-    assert_includes ["approved", "published"], @pending.status
+    assert_includes %w[approved published], @pending.status
     assert_not_nil @pending.approved_at
   end
 

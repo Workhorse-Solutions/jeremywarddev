@@ -75,7 +75,7 @@ Rails.application.routes.draw do
     delete "/impersonation", to: "impersonations#destroy", as: :impersonation
     resources :posts
 
-    resources :content, only: [:index, :show, :edit, :update, :destroy] do
+    resources :content, only: %i[index show edit update destroy] do
       member do
         post :approve
         post :reject
