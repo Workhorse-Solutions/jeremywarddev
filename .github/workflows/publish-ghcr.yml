@@ -1,0 +1,108 @@
+name: Publish Docker image to GHCR
+
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: false
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+
+    outputs:
+      version: ${{ steps.vars.outputs.version }}
+
+    steps:
+      - name: Determine deploy version (full SHA)
+        id: vars
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=${GITHUB_SHA}" >> "$GITHUB_OUTPUT"
+          else
+            echo "version=${{ github.event.workflow_run.head_sha }}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Checkout (exact commit)
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ steps.vars.outputs.version }}
+
+      - name: Set lowercase image name
+        id: image
+        run: echo "name=$(echo 'ghcr.io/${{ github.repository }}' | tr '[:upper:]' '[:lower:]')" >> "$GITHUB_OUTPUT"
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          platforms: linux/amd64
+          tags: |
+            ${{ steps.image.outputs.name }}:${{ steps.vars.outputs.version }}
+            ${{ steps.image.outputs.name }}:latest
+          labels: |
+            service=jwd
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.head_branch == 'main' }}
+
+    steps:
+      - name: Checkout (exact commit)
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ needs.build-and-push.outputs.version }}
+
+      - name: Load secrets from 1Password
+        uses: 1password/load-secrets-action@v2
+        with:
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          DEPLOY_SSH_KEY: op://Workhorse-deploys/jwd-deploy-ssh/private key
+          RAILS_MASTER_KEY: op://Workhorse-deploys/jwd-production/RAILS_MASTER_KEY
+          KAMAL_REGISTRY_PASSWORD: op://Workhorse-deploys/jwd-production/KAMAL_REGISTRY_PASSWORD
+
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+
+      - name: Set up SSH key
+        run: |
+          mkdir -p ~/.ssh
+          echo "$DEPLOY_SSH_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+          ssh-keyscan -H 164.92.68.131 >> ~/.ssh/known_hosts
+          cat >> ~/.ssh/config <<EOF
+          Host 164.92.68.131
+            IdentityFile ~/.ssh/deploy_key
+            StrictHostKeyChecking no
+          EOF
+
+      - name: Deploy to production (use already-pushed image)
+        env:
+          VERSION: ${{ needs.build-and-push.outputs.version }}
+          RAILS_MASTER_KEY: ${{ env.RAILS_MASTER_KEY }}
+          KAMAL_REGISTRY_PASSWORD: ${{ env.KAMAL_REGISTRY_PASSWORD }}
+        run: bin/kamal deploy -P --version "$VERSION"

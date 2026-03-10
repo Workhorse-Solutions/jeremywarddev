@@ -54,3 +54,7 @@
 
 # rails_foundry_cli gem lives as a separate git repository inside the dev repo.
 /rails_foundry_cli/
+
+# Ignore key files for decrypting credentials and more.
+/config/credentials/*.key
+
