@@ -112,4 +112,5 @@ jobs:
           VERSION: ${{ needs.build-and-push.outputs.version }}
           RAILS_MASTER_KEY: ${{ env.RAILS_MASTER_KEY }}
           KAMAL_REGISTRY_PASSWORD: ${{ env.KAMAL_REGISTRY_PASSWORD }}
+          BUNDLE_WITHOUT: "development:test:foundry_cli"
         run: bin/kamal deploy -P --version "$VERSION"
