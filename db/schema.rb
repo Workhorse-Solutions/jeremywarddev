@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_03_10_000001) do
+ActiveRecord::Schema[8.1].define(version: 2026_03_10_000002) do
   create_table "account_users", force: :cascade do |t|
     t.bigint "account_id", null: false
     t.datetime "created_at", null: false
@@ -34,6 +34,25 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_10_000001) do
     t.index ["slug"], name: "index_accounts_on_slug", unique: true
     t.index ["stripe_customer_id"], name: "index_accounts_on_stripe_customer_id"
     t.index ["stripe_subscription_id"], name: "index_accounts_on_stripe_subscription_id"
+  end
+
+  create_table "agent_contents", force: :cascade do |t|
+    t.bigint "account_id", null: false
+    t.string "content_type", null: false
+    t.string "status", default: "pending_approval", null: false
+    t.string "title", null: false
+    t.text "body", null: false
+    t.text "metadata"
+    t.string "agent_name", null: false
+    t.datetime "approved_at"
+    t.datetime "published_at"
+    t.datetime "scheduled_for"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["account_id", "content_type"], name: "index_agent_contents_on_account_id_and_content_type"
+    t.index ["account_id", "created_at"], name: "index_agent_contents_on_account_id_and_created_at"
+    t.index ["account_id", "status"], name: "index_agent_contents_on_account_id_and_status"
+    t.index ["account_id"], name: "index_agent_contents_on_account_id"
   end
 
   create_table "posts", force: :cascade do |t|
@@ -80,6 +99,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_03_10_000001) do
     t.index ["session_token"], name: "index_users_on_session_token", unique: true
   end
 
+  add_foreign_key "agent_contents", "accounts"
   add_foreign_key "account_users", "accounts"
   add_foreign_key "account_users", "users"
   add_foreign_key "posts", "accounts"

@@ -1,0 +1,46 @@
+pending_blog:
+  account: acme
+  content_type: blog_post
+  status: pending_approval
+  title: "AI Trends in Rails Development"
+  body: "Here are the latest AI trends affecting Rails developers..."
+  agent_name: Clark
+  metadata: '{"word_count": 450}'
+
+approved_linkedin:
+  account: acme
+  content_type: linkedin_post
+  status: approved
+  title: "Why Rails Still Matters"
+  body: "Rails isn't going anywhere. Here's why..."
+  agent_name: Clark
+  approved_at: <%= 1.day.ago.iso8601 %>
+  metadata: '{}'
+
+scheduled_tweet:
+  account: acme
+  content_type: x_post
+  status: scheduled
+  title: "Quick Rails Tip"
+  body: "Did you know you can use #to_param for custom URLs? #RubyOnRails"
+  agent_name: Clark
+  scheduled_for: <%= 2.days.from_now.iso8601 %>
+  metadata: '{}'
+
+other_account_content:
+  account: other
+  content_type: blog_post
+  status: pending_approval
+  title: "Other Account Blog Post"
+  body: "This belongs to a different account."
+  agent_name: Holmes
+  metadata: '{}'
+
+rejected_content:
+  account: acme
+  content_type: research_report
+  status: rejected
+  title: "Market Analysis Q1"
+  body: "Quarterly market analysis..."
+  agent_name: Holmes
+  metadata: '{"rejection_note": "Needs more data"}'

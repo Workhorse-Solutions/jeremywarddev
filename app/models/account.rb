@@ -5,6 +5,7 @@ class Account < ApplicationRecord
   has_many :users, through: :account_users
   has_many :invitations, dependent: :destroy
   has_many :posts, dependent: :destroy
+  has_many :agent_contents, dependent: :destroy
 
   validates :name, presence: true
   validates :billing_status, inclusion: { in: BILLING_STATUSES }

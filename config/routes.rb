@@ -74,6 +74,13 @@ Rails.application.routes.draw do
     end
     delete "/impersonation", to: "impersonations#destroy", as: :impersonation
     resources :posts
+
+    resources :content, only: [:index, :show, :edit, :update, :destroy] do
+      member do
+        post :approve
+        post :reject
+      end
+    end
   end
 
   mount MissionControl::Jobs::Engine, at: "/system/jobs"

@@ -34,6 +34,10 @@
               <span class="size-5"><%= heroicon "document-text", variant: :mini %></span>
               <span>Posts</span>
             <% end %></li>
+            <li><%= link_to admin_content_index_path, class: "menu-item #{current_page?(admin_content_index_path) ? 'active' : ''}" do %>
+              <span class="size-5"><%= heroicon "inbox-stack", variant: :mini %></span>
+              <span>Content</span>
+            <% end %></li>
             <li><%= link_to dashboard_path, class: "menu-item" do %>
               <span class="size-5"><%= heroicon "arrow-left", variant: :mini %></span>
               <span><%= t("admin.layout.nav.back_to_app") %></span>
