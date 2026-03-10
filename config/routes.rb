@@ -8,6 +8,11 @@ Rails.application.routes.draw do
     get "/portfolio", to: "pages#portfolio", as: :portfolio
     get "/about", to: "pages#about", as: :about
 
+    # Blog
+    get "/blog",          to: "blog#index", as: :blog
+    get "/blog/feed.rss", to: "blog#feed",  as: :blog_feed, defaults: { format: :rss }
+    get "/blog/:slug",    to: "blog#show",  as: :blog_post
+
     get  "/login",  to: "sessions#new",     as: :login
     post "/login",  to: "sessions#create"
     delete "/logout", to: "sessions#destroy", as: :logout
@@ -68,6 +73,7 @@ Rails.application.routes.draw do
       end
     end
     delete "/impersonation", to: "impersonations#destroy", as: :impersonation
+    resources :posts
   end
 
   mount MissionControl::Jobs::Engine, at: "/system/jobs"
