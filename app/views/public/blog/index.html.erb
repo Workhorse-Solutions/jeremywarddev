@@ -1,0 +1,26 @@
+<% content_for :title, "Blog" %>
+
+<div class="max-w-3xl mx-auto py-12 px-4">
+  <h1 class="text-3xl font-bold mb-8">Blog</h1>
+
+  <% if @posts.any? %>
+    <div class="space-y-8">
+      <% @posts.each do |post| %>
+        <article class="card bg-base-100 shadow-sm">
+          <div class="card-body">
+            <h2 class="card-title">
+              <%= link_to post.title, blog_post_path(slug: post.slug), class: "link link-hover" %>
+            </h2>
+            <p class="text-sm text-base-content/60">
+              <%= l(post.published_at, format: :long) %>
+            </p>
+            <p class="line-clamp-3"><%= strip_tags(post.body_html).truncate(200) %></p>
+            <%= link_to "Read more →", blog_post_path(slug: post.slug), class: "link link-primary text-sm" %>
+          </div>
+        </article>
+      <% end %>
+    </div>
+  <% else %>
+    <p class="text-center text-base-content/60 py-12">No posts yet. Check back soon!</p>
+  <% end %>
+</div>

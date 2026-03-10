@@ -1,0 +1,47 @@
+<% content_for :title, "Posts" %>
+
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold">Posts</h1>
+  <%= link_to "New Post", new_admin_post_path, class: "btn btn-primary" %>
+</div>
+
+<div class="overflow-x-auto">
+  <table class="table table-zebra w-full">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Published At</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @posts.each do |post| %>
+        <tr>
+          <td><%= link_to post.title, admin_post_path(post), class: "link link-primary" %></td>
+          <td>
+            <% case post.status %>
+            <% when "published" %>
+              <span class="badge badge-success">Published</span>
+            <% when "scheduled" %>
+              <span class="badge badge-info">Scheduled</span>
+            <% when "draft" %>
+              <span class="badge badge-warning">Draft</span>
+            <% end %>
+          </td>
+          <td><%= post.published_at ? l(post.published_at, format: :short) : "—" %></td>
+          <td class="flex gap-1">
+            <%= link_to "Edit", edit_admin_post_path(post), class: "btn btn-xs btn-ghost" %>
+            <%= button_to "Delete", admin_post_path(post), method: :delete,
+              class: "btn btn-xs btn-error",
+              data: { turbo_confirm: "Are you sure?" } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+
+<% if @posts.empty? %>
+  <p class="text-center text-base-content/60 py-8">No posts yet. Create your first post!</p>
+<% end %>
