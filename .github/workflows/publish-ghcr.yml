@@ -92,6 +92,8 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
+        env:
+          BUNDLE_WITHOUT: "development:test:foundry_cli"
 
       - name: Set up SSH key
         run: |
