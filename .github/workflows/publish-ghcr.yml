@@ -65,7 +65,7 @@ jobs:
             ${{ steps.image.outputs.name }}:${{ steps.vars.outputs.version }}
             ${{ steps.image.outputs.name }}:latest
           labels: |
-            service=jwd
+            service=railsfoundry
 
   deploy:
     needs: build-and-push
