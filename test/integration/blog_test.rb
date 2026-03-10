@@ -34,15 +34,13 @@ class BlogTest < ActionDispatch::IntegrationTest
   end
 
   test "GET /blog/:slug returns 404 for draft post" do
-    assert_raises(ActiveRecord::RecordNotFound) do
-      get blog_post_path(slug: @draft_post.slug)
-    end
+    get blog_post_path(slug: @draft_post.slug)
+    assert_response :not_found
   end
 
   test "GET /blog/:slug returns 404 for other account post" do
-    assert_raises(ActiveRecord::RecordNotFound) do
-      get blog_post_path(slug: @other_post.slug)
-    end
+    get blog_post_path(slug: @other_post.slug)
+    assert_response :not_found
   end
 
   test "GET /blog/feed.rss returns RSS feed" do

@@ -115,9 +115,9 @@ class PostTest < ActiveSupport::TestCase
   # --- Slug auto-generation ---
 
   test "generates slug from title before validation" do
-    post = build_post(title: "Hello World", slug: nil)
+    post = build_post(title: "My First Post", slug: nil)
     post.valid?
-    assert_equal "hello-world", post.slug
+    assert_equal "my-first-post", post.slug
   end
 
   test "slug generation strips special characters" do

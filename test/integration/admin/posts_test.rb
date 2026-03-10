@@ -45,9 +45,8 @@ class Admin::PostsTest < ActionDispatch::IntegrationTest
   end
 
   test "GET /admin/posts/:id returns 404 for other account post" do
-    assert_raises(ActiveRecord::RecordNotFound) do
-      get admin_post_path(@other_post)
-    end
+    get admin_post_path(@other_post)
+    assert_response :not_found
   end
 
   test "PATCH /admin/posts/:id updates post" do
@@ -67,16 +66,14 @@ class Admin::PostsTest < ActionDispatch::IntegrationTest
   end
 
   test "cannot update other account post" do
-    assert_raises(ActiveRecord::RecordNotFound) do
-      patch admin_post_path(@other_post), params: {
-        post: { title: "Hacked" }
-      }
-    end
+    patch admin_post_path(@other_post), params: {
+      post: { title: "Hacked" }
+    }
+    assert_response :not_found
   end
 
   test "cannot destroy other account post" do
-    assert_raises(ActiveRecord::RecordNotFound) do
-      delete admin_post_path(@other_post)
-    end
+    delete admin_post_path(@other_post)
+    assert_response :not_found
   end
 end
