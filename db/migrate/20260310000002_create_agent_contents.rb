@@ -15,8 +15,8 @@ class CreateAgentContents < ActiveRecord::Migration[8.0]
       t.timestamps
     end
 
-    add_index :agent_contents, [:account_id, :status]
-    add_index :agent_contents, [:account_id, :content_type]
-    add_index :agent_contents, [:account_id, :created_at]
+    add_index :agent_contents, %i[account_id status]
+    add_index :agent_contents, %i[account_id content_type]
+    add_index :agent_contents, %i[account_id created_at]
   end
 end
