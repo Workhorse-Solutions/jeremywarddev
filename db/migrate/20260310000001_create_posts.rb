@@ -12,8 +12,8 @@ class CreatePosts < ActiveRecord::Migration[8.1]
       t.timestamps
     end
 
-    add_index :posts, [:account_id, :slug], unique: true
-    add_index :posts, [:account_id, :status]
-    add_index :posts, [:account_id, :published_at]
+    add_index :posts, [ :account_id, :slug ], unique: true
+    add_index :posts, [ :account_id, :status ]
+    add_index :posts, [ :account_id, :published_at ]
   end
 end

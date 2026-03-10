@@ -31,7 +31,7 @@
     <div class="divider"></div>
 
     <div class="prose max-w-none">
-      <%= raw @post.body_html %>
+      <%= sanitize @post.body_html, tags: %w[ h1 h2 h3 h4 h5 h6 p a ul ol li blockquote pre code em strong br hr img table thead tbody tr th td span div dl dt dd sup sub del s ], attributes: %w[ href src alt title class id style target rel ] %>
     </div>
   </div>
 </div>
