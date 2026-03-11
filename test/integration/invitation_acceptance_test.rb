@@ -42,10 +42,10 @@ class InvitationAcceptanceTest < ActionDispatch::IntegrationTest
     assert_equal @token, session[:pending_invitation_token]
   end
 
-  test "POST accept redirects to signup for unauthenticated visitor without account" do
+  test "POST accept redirects to login for unauthenticated visitor without account" do
     post accept_invitation_path(token: @token)
 
-    assert_redirected_to signup_path
+    assert_redirected_to login_path
     assert_equal @token, session[:pending_invitation_token]
   end
 

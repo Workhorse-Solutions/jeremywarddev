@@ -9,44 +9,26 @@
 #   end
 
 # =============================================================================
-# Demo seed data — installed by rails generate rails_foundry_cli:demo
-# Remove this section or run rails destroy rails_foundry_cli:demo to clean up.
+# Site owner
 # =============================================================================
 
-# Owner: alice@example.com / password123
-demo_owner = User.find_or_create_by!(email: "alice@example.com") do |u|
-  u.password = "password123"
-  u.first_name = "Alice"
-  u.last_name = "Founder"
+owner = User.find_or_create_by!(email: "jeremy@workhorsesolutions.llc") do |u|
+  u.password = ENV.fetch("ADMIN_PASSWORD") { SecureRandom.hex(16) }
+  u.first_name = "Jeremy"
+  u.last_name = "Ward"
   u.email_verified_at = Time.current
+  u.system_admin = true
 end
 
-# Account
-demo_account = Account.find_or_create_by!(name: "Demo Company") do |a|
-  a.billing_status = "trialing"
-  a.trial_ends_at = 14.days.from_now
+account = Account.find_or_create_by!(name: "Jeremy Ward") do |a|
+  a.billing_status = "active"
 end
 
-AccountUser.find_or_create_by!(account: demo_account, user: demo_owner) do |au|
+AccountUser.find_or_create_by!(account: account, user: owner) do |au|
   au.role = "owner"
 end
 
-# Team member: bob@example.com / password123
-demo_member = User.find_or_create_by!(email: "bob@example.com") do |u|
-  u.password = "password123"
-  u.first_name = "Bob"
-  u.last_name = "Member"
-  u.email_verified_at = Time.current
-end
+# Ensure system_admin is set even if user already existed
+owner.update!(system_admin: true) unless owner.system_admin?
 
-AccountUser.find_or_create_by!(account: demo_account, user: demo_member) do |au|
-  au.role = "member"
-end
-
-# Pending invitation
-Invitation.find_or_create_by!(email: "charlie@example.com", account: demo_account) do |inv|
-  inv.invited_by_user = demo_owner
-  inv.expires_at = 7.days.from_now
-end
-
-puts "  Demo seed data loaded."
+puts "  Site owner seeded (jeremy@workhorsesolutions.llc)."

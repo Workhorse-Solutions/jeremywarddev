@@ -47,41 +47,6 @@ class RackAttackTest < ActionDispatch::IntegrationTest
   end
 
   # ---------------------------------------------------------------------------
-  # Signup — per IP throttle (3 req / 1min default)
-  # ---------------------------------------------------------------------------
-  test "POST /signup returns 429 after exceeding IP limit" do
-    limit = ENV.fetch("RACK_ATTACK_SIGNUP_LIMIT", 3).to_i
-
-    limit.times do |i|
-      post signup_path,
-           params: {
-             registration: {
-               email: "user#{i}@example.com",
-               password: "password123",
-               password_confirmation: "password123",
-               first_name: "Test",
-               last_name: "User"
-             }
-           },
-           env: { "REMOTE_ADDR" => EXTERNAL_IP }
-    end
-
-    post signup_path,
-         params: {
-           registration: {
-             email: "overflow@example.com",
-             password: "password123",
-             password_confirmation: "password123",
-             first_name: "Test",
-             last_name: "User"
-           }
-         },
-         env: { "REMOTE_ADDR" => EXTERNAL_IP }
-
-    assert_equal 429, response.status
-  end
-
-  # ---------------------------------------------------------------------------
   # Forgot password — per IP throttle (3 req / 1min default)
   # ---------------------------------------------------------------------------
   test "POST /forgot-password returns 429 after exceeding IP limit" do

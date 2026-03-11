@@ -17,9 +17,6 @@ Rails.application.routes.draw do
     post "/login",  to: "sessions#create"
     delete "/logout", to: "sessions#destroy", as: :logout
 
-    get  "/signup", to: "registrations#new",    as: :signup
-    post "/signup", to: "registrations#create"
-
     # Email verification
     get  "/verify-email",    to: "email_verifications#show",   as: :verify_email
     post "/resend-verification", to: "email_verifications#resend", as: :resend_verification

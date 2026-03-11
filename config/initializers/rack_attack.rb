@@ -9,7 +9,6 @@
 #
 # Endpoints protected:
 #   POST /login                      — credential brute-force & stuffing
-#   POST /signup                     — registration spam
 #   POST /forgot-password            — password-reset abuse & email spam
 #   POST /resend-verification        — email-verification resend spam
 #   POST /email-verification/resend  — alternate resend path
@@ -74,17 +73,6 @@ Rack::Attack.throttle(
     req.params.dig("session", "email")&.downcase&.strip ||
       req.params.dig("email")&.downcase&.strip
   end
-end
-
-# ---------------------------------------------------------------------------
-# Registration — per IP
-# ---------------------------------------------------------------------------
-Rack::Attack.throttle(
-  "signup/ip",
-  limit:  ENV.fetch("RACK_ATTACK_SIGNUP_LIMIT", 3).to_i,
-  period: ENV.fetch("RACK_ATTACK_SIGNUP_PERIOD", 1.minute.to_i).to_i
-) do |req|
-  req.ip if req.path == "/signup" && req.post?
 end
 
 # ---------------------------------------------------------------------------

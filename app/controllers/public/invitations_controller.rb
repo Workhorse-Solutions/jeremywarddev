@@ -24,11 +24,7 @@ class Public::InvitationsController < Public::BaseController
 
     unless logged_in?
       session[:pending_invitation_token] = params[:token]
-      if User.exists?(email: @invitation.email)
-        redirect_to login_path, notice: I18n.t("public.invitations.login_to_accept")
-      else
-        redirect_to signup_path, notice: I18n.t("public.invitations.signup_to_accept")
-      end
+      redirect_to login_path, notice: I18n.t("public.invitations.login_to_accept")
       return
     end
 
