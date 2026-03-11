@@ -1,0 +1,63 @@
+<% content_for(:title) { "Edit: #{@content.title}" } %>
+
+<div class="space-y-6">
+  <div class="flex items-center justify-between">
+    <h1 class="text-2xl font-bold">Edit Content</h1>
+    <%= link_to "← Back", admin_content_path(@content), class: "btn btn-ghost btn-sm" %>
+  </div>
+
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <div class="mb-4 flex items-center gap-2">
+        <span class="badge badge-ghost"><%= @content.agent_name %></span>
+        <span class="badge badge-outline"><%= @content.content_type.humanize %></span>
+      </div>
+
+      <%= form_with model: @content, url: admin_content_path(@content), method: :patch do |f| %>
+        <div class="space-y-4">
+          <div class="form-control">
+            <%= f.label :title, class: "label" do %>
+              <span class="label-text">Title</span>
+            <% end %>
+            <%= f.text_field :title, class: "input input-bordered w-full #{@content.errors[:title].any? ? 'input-error' : ''}" %>
+            <% if @content.errors[:title].any? %>
+              <label class="label"><span class="label-text-alt text-error"><%= @content.errors[:title].first %></span></label>
+            <% end %>
+          </div>
+
+          <div class="form-control">
+            <%= f.label :body, class: "label" do %>
+              <span class="label-text">Body</span>
+            <% end %>
+            <%= f.text_area :body, rows: 15, class: "textarea textarea-bordered w-full font-mono #{@content.errors[:body].any? ? 'textarea-error' : ''}" %>
+            <% if @content.errors[:body].any? %>
+              <label class="label"><span class="label-text-alt text-error"><%= @content.errors[:body].first %></span></label>
+            <% end %>
+          </div>
+
+          <div class="form-control">
+            <%= f.label :scheduled_for, class: "label" do %>
+              <span class="label-text">Schedule For (optional)</span>
+            <% end %>
+            <%= f.datetime_local_field :scheduled_for, class: "input input-bordered w-full max-w-xs" %>
+          </div>
+
+          <div class="flex gap-2">
+            <%= f.submit "Save Changes", class: "btn btn-primary" %>
+            <%= link_to "Cancel", admin_content_path(@content), class: "btn btn-ghost" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <%# Preview %>
+  <div class="card bg-base-100 shadow">
+    <div class="card-body">
+      <h2 class="card-title text-sm uppercase tracking-wide text-base-content/60">Current Preview</h2>
+      <div class="prose max-w-none">
+        <%= simple_format(@content.body) %>
+      </div>
+    </div>
+  </div>
+</div>

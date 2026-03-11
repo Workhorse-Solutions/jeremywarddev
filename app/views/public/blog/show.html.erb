@@ -1,0 +1,18 @@
+<% content_for :title, @post.title %>
+
+<article class="max-w-3xl mx-auto py-12 px-4">
+  <header class="mb-8">
+    <h1 class="text-3xl font-bold mb-2"><%= @post.title %></h1>
+    <p class="text-sm text-base-content/60">
+      <%= l(@post.published_at, format: :long) %>
+    </p>
+  </header>
+
+  <div class="prose max-w-none">
+    <%= sanitize @post.body_html, tags: %w[ h1 h2 h3 h4 h5 h6 p a ul ol li blockquote pre code em strong br hr img table thead tbody tr th td span div dl dt dd sup sub del s ], attributes: %w[ href src alt title class id style target rel ] %>
+  </div>
+
+  <div class="mt-12">
+    <%= link_to "← Back to blog", blog_path, class: "link link-primary" %>
+  </div>
+</article>

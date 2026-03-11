@@ -186,6 +186,7 @@ en:
         home: "Home"
         portfolio: "Portfolio"
         about: "About"
+        blog: "Blog"
         dashboard: "Dashboard"
       footer:
         copyright: "Jeremy Ward"
